@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424180143) do
+ActiveRecord::Schema.define(version: 20180424181851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,15 +44,15 @@ ActiveRecord::Schema.define(version: 20180424180143) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "skill_activities", force: :cascade do |t|
+  create_table "skill_progresses", force: :cascade do |t|
     t.decimal "completion"
     t.decimal "proficiency"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.bigint "skill_id"
-    t.index ["skill_id"], name: "index_skill_activities_on_skill_id"
-    t.index ["user_id"], name: "index_skill_activities_on_user_id"
+    t.index ["skill_id"], name: "index_skill_progresses_on_skill_id"
+    t.index ["user_id"], name: "index_skill_progresses_on_user_id"
   end
 
   create_table "skills", force: :cascade do |t|
@@ -88,6 +88,6 @@ ActiveRecord::Schema.define(version: 20180424180143) do
   add_foreign_key "lesson_activities", "users"
   add_foreign_key "lesson_levels", "lessons"
   add_foreign_key "lesson_levels", "skills"
-  add_foreign_key "skill_activities", "skills"
-  add_foreign_key "skill_activities", "users"
+  add_foreign_key "skill_progresses", "skills"
+  add_foreign_key "skill_progresses", "users"
 end
