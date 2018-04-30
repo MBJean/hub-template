@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424181851) do
+ActiveRecord::Schema.define(version: 20180430214047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,11 +71,13 @@ ActiveRecord::Schema.define(version: 20180424181851) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users_words", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "word_id", null: false
-    t.index ["user_id"], name: "index_users_words_on_user_id"
-    t.index ["word_id"], name: "index_users_words_on_word_id"
+  create_table "vocabulary_books", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "word_id"
+    t.index ["user_id"], name: "index_vocabulary_books_on_user_id"
+    t.index ["word_id"], name: "index_vocabulary_books_on_word_id"
   end
 
   create_table "words", force: :cascade do |t|
@@ -90,4 +92,6 @@ ActiveRecord::Schema.define(version: 20180424181851) do
   add_foreign_key "lesson_levels", "skills"
   add_foreign_key "skill_progresses", "skills"
   add_foreign_key "skill_progresses", "users"
+  add_foreign_key "vocabulary_books", "users"
+  add_foreign_key "vocabulary_books", "words"
 end
