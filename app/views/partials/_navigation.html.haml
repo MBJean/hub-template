@@ -6,7 +6,8 @@
       - if user_signed_in?
         %li.nav__text
           = precede "Logged in as " do
-            %strong#display_name= current_user
+            %strong#display_name= current_user.email
+        %li.nav__item= link_to "Profile", user_profile_path, :class => "nav__link"
         %li.nav__item= link_to "Log Out", destroy_user_session_path, method: :delete, :class => "nav__link"
       - elsif !user_signed_in?
         %li.nav__item= link_to "Log In", new_user_session_path, :class => "nav__link"
