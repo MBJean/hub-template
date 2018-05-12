@@ -1,0 +1,26 @@
+.Dictionary {
+  background-color: $white;
+  height: 100vh;
+  left: 0;
+  padding: 4em;
+  position: fixed;
+  top: 0;
+  transition: all 0.3s ease;
+  width: 100vw;
+  z-index: 10;
+}
+
+.Dictionary--inactive {
+  transform: translateY(100%);
+}
+
+.Dictionary__reveal {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -100%);
+}
+
+.Dictionary__reveal--bottom {
+  transform: translate(-50%, 100%);
+}
