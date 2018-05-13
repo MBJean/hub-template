@@ -1,9 +1,7 @@
 require 'json'
-require 'open-uri'
-require 'csv'
-require 'net/http'
 
 class DictionaryController < ApplicationController
+  skip_before_action :authenticate_user!, only: [:search]
   def search
     @search_input = params[:input]
     # TODO: ensure that @search_input is properly sanitized

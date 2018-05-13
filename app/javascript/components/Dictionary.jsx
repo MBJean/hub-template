@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import convertEntities from '../helpers/convertEntities'
+import getMeta from '../helpers/getMeta'
+import renderUnsafeXml from '../helpers/renderUnsafeXml'
 
 export default class Dictionary extends Component {
 
@@ -12,9 +14,7 @@ export default class Dictionary extends Component {
   }
 
   currentSearchUpdate = (ev) => {
-    this.setState({
-      current_search: ev.target.value
-    });
+    this.setState({ current_search: ev.target.value });
   }
 
   fetchDefined = (text) => {
@@ -33,6 +33,7 @@ export default class Dictionary extends Component {
       // ...and removing all non unique entries
       .filter( (value, index, self) => { return self.indexOf(value) === index; } );
 
+    // create array of JSON objects out of db calls using lemmata from above
     return Promise.all(arr_lemmata.map( (entry) => {
       return fetch("/dictionary", {
         body: JSON.stringify({"input": entry}), // must match 'Content-Type' header
@@ -41,21 +42,15 @@ export default class Dictionary extends Component {
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
           'content-type': 'application/json',
-          'X-CSRF-Token': self.getMeta()
+          'X-CSRF-Token': getMeta()
         },
         method: 'POST', // *GET, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *same-origin
         redirect: 'follow', // *manual, error
         referrer: 'no-referrer', // *client
-      })
-        .then( res => res.json() )
-        .then( json => {
-          return json;
-        });
+      }).then( res => res.json() );
     } )).then(function(responses) {
-      self.setState({
-        results_defined: responses
-      });
+      self.setState({ results_defined: responses });
     });
 
   }
@@ -69,24 +64,8 @@ export default class Dictionary extends Component {
       });
   }
 
-  getMeta() {
-    let metas = document.getElementsByTagName('meta');
-    for (var i = 0; i < metas.length; i++) {
-      if (metas[i].getAttribute("name") == "csrf-token") {
-        return metas[i].getAttribute("content");
-      }
-    }
-    return "";
-  }
-
-  renderXml = (string) => {
-    return {__html: string};
-  }
-
   revealDictionary = () => {
-    this.setState({
-      revealed: !this.state.revealed
-    });
+    this.setState({ revealed: !this.state.revealed });
   }
 
   submit = (ev) => {
@@ -99,10 +78,8 @@ export default class Dictionary extends Component {
     return (
       <div className={ this.state.revealed ? "Dictionary Dictionary--active": "Dictionary Dictionary--inactive"}>
         <div className="Dictionary__container">
-          <button
-            className={ this.state.revealed ? "Dictionary__reveal Dictionary__reveal--bottom" : "Dictionary__reveal Dictionary__reveal--top"}
-            onClick={ this.revealDictionary }
-          >
+
+          <button className={ this.state.revealed ? "Dictionary__reveal Dictionary__reveal--bottom" : "Dictionary__reveal Dictionary__reveal--top"} onClick={ this.revealDictionary } >
             {
               this.state.revealed ?
                 <span className="Dictionary__icon">&#x2716;</span>:
@@ -114,17 +91,14 @@ export default class Dictionary extends Component {
           <p>Powered by <a href="http://www.perseus.tufts.edu/hopper/" target="blank">The Perseus Project</a></p>
 
           <form className="Dictionary__form" onSubmit={ this.submit }>
-            <input
-              onChange={ this.currentSearchUpdate }
-              value={ this.state.current_search }
-            />
-
+            <input onChange={ this.currentSearchUpdate } value={ this.state.current_search } />
             <input type="submit" />
           </form>
 
-          <div className="Dictionary__parsed" dangerouslySetInnerHTML={ this.renderXml(this.state.results_parsed) }></div>
+          <div className="Dictionary__parsed" dangerouslySetInnerHTML={ renderUnsafeXml(this.state.results_parsed) }></div>
 
-          { this.state.results_defined.map( entry => <div className="Dictionary__defined" dangerouslySetInnerHTML={ this.renderXml(convertEntities(entry.description)) } key={entry.id}></div>)}
+          { this.state.results_defined.map( entry => <div className="Dictionary__defined" dangerouslySetInnerHTML={ renderUnsafeXml(convertEntities(entry.description)) } key={entry.id}></div>) }
+
         </div>
       </div>
     )
