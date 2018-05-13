@@ -75,29 +75,33 @@ export default class Dictionary extends Component {
 
     return (
       <div className={ this.state.revealed ? "Dictionary Dictionary--active": "Dictionary Dictionary--inactive"}>
+        <div className="Dictionary__container">
+          <button
+            className={ this.state.revealed ? "Dictionary__reveal Dictionary__reveal--bottom" : "Dictionary__reveal Dictionary__reveal--top"}
+            onClick={ this.revealDictionary }
+          >
+            {
+              this.state.revealed ?
+                <span className="Dictionary__icon">&#x2716;</span>:
+                <span className="Dictionary__icon">&#x270E;</span>
+            }
+          </button>
 
-        <button
-          className={ this.state.revealed ? "Dictionary__reveal Dictionary__reveal--bottom" : "Dictionary__reveal Dictionary__reveal--top"}
-          onClick={ this.revealDictionary }
-        >
-          Toggle dictionary
-        </button>
+          <p>Search for a Latin word</p>
 
-        <p>Search for a Latin word</p>
+          <form className="Dictionary__form" onSubmit={ this.submit }>
+            <input
+              onChange={ this.currentSearchUpdate }
+              value={ this.state.current_search }
+            />
 
-        <form onSubmit={ this.submit }>
-          <input
-            onChange={ this.currentSearchUpdate }
-            value={ this.state.current_search }
-          />
+            <input type="submit" />
+          </form>
 
-          <input type="submit" />
-        </form>
+          <div className="Dictionary__parsed" dangerouslySetInnerHTML={ this.renderXml(this.state.results_parsed) }></div>
 
-        <div className="Dictionary__parsed" dangerouslySetInnerHTML={ this.renderXml(this.state.results_parsed) }></div>
-
-        <div className="Dictionary__defined" dangerouslySetInnerHTML={ this.renderXml(this.state.results_defined) }></div>
-
+          <div className="Dictionary__defined" dangerouslySetInnerHTML={ this.renderXml(this.state.results_defined) }></div>
+        </div>
       </div>
     )
   }

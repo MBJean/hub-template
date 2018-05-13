@@ -1,20 +1,30 @@
 .Dictionary {
   background-color: $white;
+  border-top: 1px solid $black;
+  box-shadow: $box-shadow-medium;
   height: 100vh;
   left: 0;
-  padding: 4em;
+  padding: 4em 2em 4em 4em;
   position: fixed;
   top: 0;
-  transition: all 0.3s ease;
+  transition: all 0.6s cubic-bezier(0.79, 0.04, 0, 1.01);
   width: 100vw;
   z-index: 10;
 }
 
 .Dictionary--inactive {
+  box-shadow: none;
   transform: translateY(100%);
 }
 
 .Dictionary__reveal {
+  background-color: $white;
+  border-bottom: none;
+  border-left: 1px solid black;
+  border-radius: 1em 1em 0 0;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  padding: 1em 2em;
   position: absolute;
   left: 50%;
   top: 0;
@@ -22,20 +32,105 @@
 }
 
 .Dictionary__reveal--bottom {
-  transform: translate(-50%, 100%);
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-radius: 0 0 1em 1em;
+  border-right: 1px solid black;
+  border-top: none;
+  transform: translate(-50%, 0);
 }
+
+.Dictionary__reveal:hover,
+.Dictionary__reveal:focus {
+  outline: 0;
+}
+
+.Dictionary__icon { font-size: 2em; }
+
+.Dictionary__container {
+  height: 100%;
+  overflow-y: scroll;
+  padding: 0 2em 4em 0;
+}
+
+.Dictionary__container:after {
+  content  : "";
+  position : absolute;
+  z-index  : 1;
+  bottom   : 0;
+  left     : 0;
+  pointer-events   : none;
+  background-image : linear-gradient(to bottom,
+                    rgba(255,255,255, 0),
+                    rgba(255,255,255, 1) 50%);
+  width    : 100%;
+  height   : 10em;
+}
+
+.Dictionary__form { margin-bottom: 1em; }
+.Dictionary__parsed { margin-bottom: 1em; }
+
+/* styling for Perseus parsed XML */
+analyses {
+  box-sizing: border-box;
+  display: block;
+  analysis {
+    box-sizing: border-box;
+    display: block;
+    expandedForm, form { display: none; }
+    * { margin-right: 1em; }
+  }
+  analysis:first-child {
+    border-top: 1px solid $black;
+    padding-top: 1rem;
+  }
+  analysis:last-child {
+    border-bottom: 1px solid $black;
+    padding-bottom: 1rem;
+  }
+}
+
+/* styling for Perseus defined XML */
+sense {
+  display: block;
+  margin: $spacer-tiny 0;
+}
+
+sense[level="2"] { margin-left: 0.5em; }
+sense[level="3"] { margin-left: 1em; }
+sense[level="4"] { margin-left: 1.5em; }
+sense[level="5"] { margin-left: 2em; }
+sense[level="6"] { margin-left: 2.5em; }
+
+hi[rend="ital"], bibl, quote, author { font-weight: normal; }
+hi[rend="ital"] { font-weight: bold; }
+
+quote { color: $dark-grey; }
+author { color: $medium-grey; }
+bibl { color: $light-grey; }
+
+cit {
+  font-family: $font-tnr;
+  font-style: italic;
+}
+
+entryFree {
+  border-bottom: 1px solid $black;
+  display: block;
+  font-family: $font-georgia;
+  letter-spacing: 0.1px;
+  padding-bottom: 2em;
+  margin-bottom: 2em;
+  width: 100%;
+}
+
+entryFree:last-child { border-bottom: none; }
 
 @media only screen and (min-width: 500px) {
   .Dictionary {
     border-right: 1px solid black;
-    height: 100vh;
-    left: 0;
-    padding: 4em;
-    position: fixed;
-    top: 0;
-    transition: all 0.3s ease;
+    border-top: 0;
     width: 400px;
-    z-index: 10;
   }
 
   .Dictionary--inactive {
@@ -44,9 +139,12 @@
 
   .Dictionary__reveal {
     border-bottom: 1px solid black;
+    border-left: none;
+    border-radius: 0 1em 1em 0;
     border-right: 1px solid black;
     border-top: 1px solid black;
     left: auto;
+    padding: 1.5em 1em;
     position: absolute;
     right: 0;
     top: 50%;

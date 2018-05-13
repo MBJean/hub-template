@@ -13,6 +13,9 @@ $font-pluto-light: 'PlutoSansLight', 'Helvetica Neue', Arial, sans-serif;
 $font-pluto-medium: 'PlutoSansMedium', 'Helvetica Neue', 'Arial', sans-serif;
 $font-clarendon-light: 'ClarendonBT-Light', Georgia, serif;
 $font-clarendon-bold: 'ClarendonBT-Bold', Georgia, serif;
+$font-arial: Arial, sans-serif;
+$font-georgia: Georgia, serif;
+$font-tnr: 'Times New Roman', serif;
 
 /***** font sizes *****/
 $font-small: 12px;
@@ -33,14 +36,15 @@ $orange: #FF8F1C;
 $light-blue: #6787B7;
 $dark-blue: #01426A;
 $magenta: #E0004D;
-$dark-grey: #AAAAAA;
-$dark-grey: #949494;
-$medium-grey: #CCCCCC;
-$default-grey: #DCDCDC;
-$light-grey: #F7F7F7;
 $white: #ffffff;
 $black: #000000;
 $font-black: #272727;
+
+/***** greys *****/
+$dark-grey: #181818;
+$medium-grey: #303030;
+$default-grey: #484848;
+$light-grey: #606060;
 
 *,
 *::before,
