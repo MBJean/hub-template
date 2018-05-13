@@ -32,10 +32,14 @@ export default class Dictionary extends Component {
       // ...and removing all non unique entries
       .filter( (value, index, self) => { return self.indexOf(value) === index; } );
 
+    // TODO: add failure checks
+      // add '1' to end of lemma and try again
+      // check elementary dictionary at http://www.perseus.tufts.edu/hopper/xmlchunk?doc=Perseus%3Atext%3A1999.04.0060%3Aentry%3D
+
     // create Promise with fetches all all lemma in arr_lemmata
     return Promise.all(arr_lemmata.map( (entry) => {
       return fetch("http://www.perseus.tufts.edu/hopper/xmlchunk?doc=Perseus%3Atext%3A1999.04.0059%3Aentry%3D" + entry)
-        .then( res => res.ok ? res.text(): "PLACEHOLDER FOR FAILED FETCH" )
+        .then( res => res.ok ? res.text(): "PLACEHOLDER" )
         .then( text => {
           return text;
         });
@@ -88,6 +92,7 @@ export default class Dictionary extends Component {
           </button>
 
           <p>Search for a Latin word</p>
+          <p>Powered by <a href="http://www.perseus.tufts.edu/hopper/" target="blank">The Perseus Project</a></p>
 
           <form className="Dictionary__form" onSubmit={ this.submit }>
             <input
