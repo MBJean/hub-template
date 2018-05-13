@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import convertEntities from '../helpers/convertEntities'
 
 export default class Dictionary extends Component {
 
@@ -32,16 +33,24 @@ export default class Dictionary extends Component {
       // ...and removing all non unique entries
       .filter( (value, index, self) => { return self.indexOf(value) === index; } );
 
-    // TODO: add failure checks
-      // add '1' to end of lemma and try again
-      // check elementary dictionary at http://www.perseus.tufts.edu/hopper/xmlchunk?doc=Perseus%3Atext%3A1999.04.0060%3Aentry%3D
-
-    // create Promise with fetches all all lemma in arr_lemmata
     return Promise.all(arr_lemmata.map( (entry) => {
-      return fetch("http://www.perseus.tufts.edu/hopper/xmlchunk?doc=Perseus%3Atext%3A1999.04.0059%3Aentry%3D" + entry)
-        .then( res => res.ok ? res.text(): "PLACEHOLDER" )
-        .then( text => {
-          return text;
+      return fetch("/dictionary", {
+        body: JSON.stringify({"input": entry}), // must match 'Content-Type' header
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *omit
+        headers: {
+          'user-agent': 'Mozilla/4.0 MDN Example',
+          'content-type': 'application/json',
+          'X-CSRF-Token': self.getMeta()
+        },
+        method: 'POST', // *GET, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *same-origin
+        redirect: 'follow', // *manual, error
+        referrer: 'no-referrer', // *client
+      })
+        .then( res => res.json() )
+        .then( json => {
+          return json;
         });
     } )).then(function(responses) {
       self.setState({
@@ -58,6 +67,16 @@ export default class Dictionary extends Component {
         this.fetchDefined(text);
         this.setState({ results_parsed: text })
       });
+  }
+
+  getMeta() {
+    let metas = document.getElementsByTagName('meta');
+    for (var i = 0; i < metas.length; i++) {
+      if (metas[i].getAttribute("name") == "csrf-token") {
+        return metas[i].getAttribute("content");
+      }
+    }
+    return "";
   }
 
   renderXml = (string) => {
@@ -105,7 +124,7 @@ export default class Dictionary extends Component {
 
           <div className="Dictionary__parsed" dangerouslySetInnerHTML={ this.renderXml(this.state.results_parsed) }></div>
 
-          <div className="Dictionary__defined" dangerouslySetInnerHTML={ this.renderXml(this.state.results_defined) }></div>
+          { this.state.results_defined.map( entry => <div className="Dictionary__defined" dangerouslySetInnerHTML={ this.renderXml(convertEntities(entry.description)) } key={entry.id}></div>)}
         </div>
       </div>
     )
