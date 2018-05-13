@@ -2,9 +2,10 @@
   background-color: $white;
   border-top: 1px solid $black;
   box-shadow: $box-shadow-medium;
+  font-size: 1rem;
   height: 100vh;
   left: 0;
-  padding: 2em 1em 2em 2em;
+  padding: 4em 1em 2em 2em;
   position: fixed;
   top: 0;
   transition: all 0.6s cubic-bezier(0.79, 0.04, 0, 1.01);
@@ -18,25 +19,21 @@
 }
 
 .Dictionary__reveal {
-  background-color: $white;
-  border-bottom: none;
-  border-left: 1px solid black;
+  background-color: $light-grey;
+  border: none;
   border-radius: 1em 1em 0 0;
-  border-right: 1px solid black;
-  border-top: 1px solid black;
+  color: $white;
+  cursor: pointer;
   padding: 1em 2em;
   position: absolute;
   left: 50%;
   top: 0;
   transform: translate(-50%, -100%);
+  transition: all 0.4s cubic-bezier(0.79, 0.04, 0, 1.01);
 }
 
 .Dictionary__reveal--bottom {
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
   border-radius: 0 0 1em 1em;
-  border-right: 1px solid black;
-  border-top: none;
   transform: translate(-50%, 0);
 }
 
@@ -67,8 +64,19 @@
   height   : 10em;
 }
 
-.Dictionary__form { margin-bottom: 1em; }
-.Dictionary__parsed { margin-bottom: 1em; }
+.Dictionary__form,
+.Dictionary__parsed { margin-bottom: 4em; }
+
+.Dictionary__title { font-size: 1.5em; }
+.Dictionary__subtitle {
+  font-weight: bold;
+  font-size: 1.25em;
+}
+
+.Dictionary__buttons {
+  text-align: right;
+  width: 100%;
+}
 
 /* styling for Perseus parsed XML */
 analyses {
@@ -80,23 +88,16 @@ analyses {
     expandedForm, form { display: none; }
     * { margin-right: 1em; }
   }
-  analysis:first-child {
-    border-top: 1px solid $black;
-    padding-top: 1rem;
-  }
-  analysis:last-child {
-    border-bottom: 1px solid $black;
-    padding-bottom: 1rem;
-  }
 }
 
 /* styling for internally defined XML */
 
 .Dictionary__defined {
-  border-bottom: 1px solid $black;
-  padding-bottom: 1em;
-  margin-bottom: 1em;
+  border: 1px dashed $black;
+  padding: 2em 1em;
+  margin-bottom: 2em;
 }
+
 
 sense {
   display: block;
@@ -143,11 +144,7 @@ entryFree:last-child { border-bottom: none; }
   }
 
   .Dictionary__reveal {
-    border-bottom: 1px solid black;
-    border-left: none;
     border-radius: 0 1em 1em 0;
-    border-right: 1px solid black;
-    border-top: 1px solid black;
     left: auto;
     padding: 1.5em 1em;
     position: absolute;
@@ -157,11 +154,7 @@ entryFree:last-child { border-bottom: none; }
   }
 
   .Dictionary__reveal--bottom {
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
     border-radius: 1em 0 0 1em;
-    border-right: none;
-    border-top: 1px solid black;
     transform: translate(0, -50%);
   }
 

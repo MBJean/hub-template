@@ -15,6 +15,15 @@ export default class Dictionary extends Component {
     results_parsed: ""
   }
 
+  clearDictionary = (ev) => {
+    ev.preventDefault();
+    this.setState({
+      current_search: "",
+      results_defined: [],
+      results_parsed: ""
+    });
+  }
+
   currentSearchUpdate = (ev) => {
     this.setState({ current_search: ev.target.value });
   }
@@ -64,16 +73,20 @@ export default class Dictionary extends Component {
             }
           </button>
 
-          <p>Search for a Latin word</p>
-          <p>Powered by <a href="http://www.perseus.tufts.edu/hopper/" target="blank">The Perseus Project</a></p>
+          <p className="Dictionary__title">Search for a Latin word</p>
 
           <form className="Dictionary__form" onSubmit={ this.submit }>
-            <input onChange={ this.currentSearchUpdate } value={ this.state.current_search } />
-            <input type="submit" />
+            <input className="form__input" onChange={ this.currentSearchUpdate } value={ this.state.current_search } />
+            <div className="Dictionary__buttons">
+              <button className="form__button form__button--red" onClick={ this.clearDictionary }>Clear</button>
+              <input className="form__button form__button--blue" type="submit" />
+            </div>
           </form>
 
+          { this.state.results_parsed.length > 0 ? <p className="Dictionary__subtitle">Parsing Information</p>: null }
           <div className="Dictionary__parsed" dangerouslySetInnerHTML={ renderUnsafeXml(this.state.results_parsed) }></div>
 
+          { this.state.results_defined.length > 0 ? <p className="Dictionary__subtitle">Lexicon Information</p>: null }
           {
             this.state.results_defined.map( entry =>
               <div className="Dictionary__defined" dangerouslySetInnerHTML={ renderUnsafeXml(convertEntities(entry.description)) } key={entry.id} />
