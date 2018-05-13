@@ -83,15 +83,17 @@ export default class Dictionary extends Component {
             </div>
           </form>
 
-          { this.state.results_parsed.length > 0 ? <p className="Dictionary__subtitle">Parsing Information</p>: null }
+          { this.state.results_defined.length > 0 ? <p className="Dictionary__subtitle">Parser</p>: null }
           <div className="Dictionary__parsed" dangerouslySetInnerHTML={ renderUnsafeXml(this.state.results_parsed) }></div>
 
-          { this.state.results_defined.length > 0 ? <p className="Dictionary__subtitle">Lexicon Information</p>: null }
+          { this.state.results_defined.length > 0 ? <p className="Dictionary__subtitle">Lexicon</p>: null }
           {
             this.state.results_defined.map( entry =>
               <div className="Dictionary__defined" dangerouslySetInnerHTML={ renderUnsafeXml(convertEntities(entry.description)) } key={entry.id} />
             )
           }
+
+          { this.state.results_parsed.length > 0 && this.state.results_defined.length === 0 ? <p className="Dictionary__subtitle">No entries found.</p>: null}
 
         </div>
       </div>
