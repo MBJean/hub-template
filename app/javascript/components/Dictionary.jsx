@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import convertEntities from '../helpers/convertEntities'
-import getMeta from '../helpers/getMeta'
-import renderUnsafeXml from '../helpers/renderUnsafeXml'
+import convertEntities from '../helpers/convertEntities';
+import createPostBody from '../helpers/createPostBody';
+import renderUnsafeXml from '../helpers/renderUnsafeXml';
+import fetchArray from '../helpers/fetchArray';
+import parseXml from '../helpers/parseXml';
 
 export default class Dictionary extends Component {
 
@@ -17,42 +19,17 @@ export default class Dictionary extends Component {
     this.setState({ current_search: ev.target.value });
   }
 
-  fetchDefined = (text) => {
-
+  fetchDefined = (xml_string) => {
     let self = this;
-
-    // parse text as dom nodes for iteration
-    let parser = new DOMParser();
-    let xmlDoc = parser.parseFromString(text,"text/xml");
-    let dom_lemmata = xmlDoc.getElementsByTagName("lemma");
-
-    // prepare for second set of fetches by creating array of lemmata...
+    // parse XML string as dom nodes so we can extract specific nodes (in this case, a node named "lemma")
+    let dom_lemmata = parseXml(xml_string, "lemma");
+    // prepare to fetch all lemmata against /dictionary by creating array of lemmata (plural of lemma), rerendering as just lemmata, and removing all non-unique entries
     let arr_lemmata = Array.from(dom_lemmata)
-      // ...rendering as just lemma...
       .map( entry => entry.textContent )
-      // ...and removing all non unique entries
-      .filter( (value, index, self) => { return self.indexOf(value) === index; } );
-
-    // create array of JSON objects out of db calls using lemmata from above
-    return Promise.all(arr_lemmata.map( (entry) => {
-      return fetch("/dictionary", {
-        body: JSON.stringify({"input": entry}), // must match 'Content-Type' header
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *omit
-        headers: {
-          'user-agent': 'Mozilla/4.0 MDN Example',
-          'content-type': 'application/json',
-          'X-CSRF-Token': getMeta()
-        },
-        method: 'POST', // *GET, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *same-origin
-        redirect: 'follow', // *manual, error
-        referrer: 'no-referrer', // *client
-      }).then( res => res.json() );
-    } )).then(function(responses) {
-      self.setState({ results_defined: responses });
-    });
-
+      .filter( (value, index, self) => self.indexOf(value) === index );
+    // create array of JSON objects out of db calls using array of lemmata from above
+    return Promise.all(fetchArray(arr_lemmata))
+    .then( responses => self.setState({ results_defined: responses }) );
   }
 
   fetchParsed = () => {
@@ -97,7 +74,11 @@ export default class Dictionary extends Component {
 
           <div className="Dictionary__parsed" dangerouslySetInnerHTML={ renderUnsafeXml(this.state.results_parsed) }></div>
 
-          { this.state.results_defined.map( entry => <div className="Dictionary__defined" dangerouslySetInnerHTML={ renderUnsafeXml(convertEntities(entry.description)) } key={entry.id}></div>) }
+          {
+            this.state.results_defined.map( entry =>
+              <div className="Dictionary__defined" dangerouslySetInnerHTML={ renderUnsafeXml(convertEntities(entry.description)) } key={entry.id} />
+            )
+          }
 
         </div>
       </div>
