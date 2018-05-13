@@ -24,3 +24,36 @@
 .Dictionary__reveal--bottom {
   transform: translate(-50%, 100%);
 }
+
+@media only screen and (min-width: 500px) {
+  .Dictionary {
+    border-right: 1px solid black;
+    height: 100vh;
+    left: 0;
+    padding: 4em;
+    position: fixed;
+    top: 0;
+    transition: all 0.3s ease;
+    width: 400px;
+    z-index: 10;
+  }
+
+  .Dictionary--inactive {
+    transform: translateX(-100%);
+  }
+
+  .Dictionary__reveal {
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    left: auto;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translate(100%, -50%);
+  }
+
+  .Dictionary__reveal--bottom {
+    transform: translate(100%, -50%);
+  }
+}
