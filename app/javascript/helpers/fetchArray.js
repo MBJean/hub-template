@@ -4,7 +4,11 @@ import createPostBody from './createPostBody';
 
 const fetchArray = (array) => array.map( entry =>
   fetch("/dictionary", createPostBody(entry))
-  .then( res => res.json() )
+  .then( res => {
+    if (res.ok) { return res.json(); }
+    throw new Error("Network response was not okay.");
+  })
+  .catch( err => err )
 );
 
 export default fetchArray;

@@ -10,6 +10,7 @@ export default class Dictionary extends Component {
 
   state = {
     current_search: "",
+    error: false,
     revealed: false,
     results_defined: [],
     results_parsed: ""
@@ -19,6 +20,7 @@ export default class Dictionary extends Component {
     ev.preventDefault();
     this.setState({
       current_search: "",
+      error: false,
       results_defined: [],
       results_parsed: ""
     });
@@ -38,16 +40,18 @@ export default class Dictionary extends Component {
       .filter( (value, index, self) => self.indexOf(value) === index );
     // create array of JSON objects out of db calls using array of lemmata from above
     return Promise.all(fetchArray(arr_lemmata))
-    .then( responses => self.setState({ results_defined: responses }) );
+      .then( responses => self.setState({ results_defined: responses }) )
+      .catch( err => self.setState({ error: true }) );
   }
 
   fetchParsed = () => {
     fetch("http://www.perseus.tufts.edu/hopper/xmlmorph?lang=la&lookup=" + this.state.current_search)
-      .then( res => res.text() )
-      .then( text => {
-        this.fetchDefined(text);
-        this.setState({ results_parsed: text })
-      });
+    .then( res => res.text() )
+    .then( text => {
+      this.fetchDefined(text);
+      this.setState({ results_parsed: text })
+    })
+    .catch( err => this.setState({ error: true }) );
   }
 
   revealDictionary = () => {
@@ -86,14 +90,21 @@ export default class Dictionary extends Component {
           { this.state.results_defined.length > 0 ? <p className="Dictionary__subtitle">Parser</p>: null }
           <div className="Dictionary__parsed" dangerouslySetInnerHTML={ renderUnsafeXml(this.state.results_parsed) }></div>
 
-          { this.state.results_defined.length > 0 ? <p className="Dictionary__subtitle">Lexicon</p>: null }
+          {
+            this.state.results_defined.length > 0 ?
+              <p className="Dictionary__subtitle">Lexicon</p>:
+              null
+            }
+
           {
             this.state.results_defined.map( entry =>
               <div className="Dictionary__defined" dangerouslySetInnerHTML={ renderUnsafeXml(convertEntities(entry.description)) } key={entry.id} />
             )
           }
 
-          { this.state.results_parsed.length > 0 && this.state.results_defined.length === 0 ? <p className="Dictionary__subtitle">No entries found.</p>: null}
+          { this.state.results_parsed.length > 0 && this.state.results_defined.length === 0 ? <p className="Dictionary__subtitle">No entries found.</p>: null }
+
+          { this.state.error ? <p className="Dictionary__subtitle">We apologize, this service is inaccessible at the moment.</p>: null }
 
         </div>
       </div>
