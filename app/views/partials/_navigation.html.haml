@@ -4,7 +4,7 @@
     %ul.nav__list
       %li.nav__text &#124;
       - if user_signed_in?
-        %li.nav__text
+        %li.nav__text.nav__logged-in-notification
           = precede "Logged in as " do
             %strong#display_name= current_user.email
         %li.nav__item= link_to "Profile", user_profile_path, :class => "nav__link"

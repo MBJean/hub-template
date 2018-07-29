@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>HubTemplate</title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
@@ -12,6 +14,8 @@
     <p class="alert--notice"><%= notice %></p>
     <p class="alert--alert"><%= alert %></p>
     <%= render "partials/navigation" %>
+    <%= render "partials/dictionary" %>
     <%= yield %>
+    <%= javascript_pack_tag 'dictionary' %>
   </body>
 </html>

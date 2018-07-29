@@ -1,0 +1,73 @@
+/***** spacers *****/
+$spacer-tiny: 7.5px;
+$spacer-15: 15px;
+$spacer-small: 25px;
+$spacer-medium: 45px;
+$spacer-60: 60px;
+$spacer-large: 75px;
+$spacer-100: 100px;
+$spacer-huge: 150px;
+
+/***** font styles *****/
+$font-arial: Arial, sans-serif;
+$font-georgia: Georgia, serif;
+$font-tnr: 'Times New Roman', serif;
+
+/***** font sizes *****/
+$font-small: 12px;
+$font-medium: 14px;
+$font-large: 16px;
+$font-huge: 30px;
+
+/***** box shadows *****/
+$box-shadow-map: 0 0 5px rgba(0, 0, 0, 1);
+$box-shadow-soft: 0 0 30px rgba(0, 0, 0, 0.10);
+$box-shadow-small: 0 0 2.5px rgba(0, 0, 0, 0.15);
+$box-shadow-medium: 0 0 5px rgba(0, 0, 0, 0.15);
+$box-shadow-large: 0 0 15px rgba(0,0,0,0.15);
+
+/***** colors *****/
+$content-width: 100%;
+$orange: #FF8F1C;
+$light-blue: #6787B7;
+$dark-blue: #01426A;
+$magenta: #E0004D;
+$white: #ffffff;
+$black: #000000;
+$font-black: #272727;
+$green: #1B512D;
+$red: #9E3734;
+$blue: #19476B;
+
+/***** greys *****/
+$dark-grey: #181818;
+$medium-grey: #303030;
+$default-grey: #484848;
+$light-grey: #606060;
+
+*,
+*::before,
+*::after {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 15px;
+  line-height: 1.533;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+.alert--notice,
+.alert--alert {
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 2;
+}

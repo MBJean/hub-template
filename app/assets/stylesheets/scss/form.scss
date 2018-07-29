@@ -1,0 +1,34 @@
+.form__input {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid $light-grey;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: 1em;
+  margin-bottom: 2em;
+  padding: 0.5em 0;
+  transition: 0.3s ease all;
+  width: 100%;
+}
+
+.form__input:focus {
+  border-bottom: 1px solid $green;
+  outline: 0;
+}
+
+.form__input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 20px white inset !important;
+}
+
+.form__button {
+  border-radius: 0.5em;
+  color: $white;
+  cursor: pointer;
+  font-size: 0.9em;
+  letter-spacing: 0.1em;
+  padding: 0.5em 1em;
+  text-transform: uppercase;
+}
+
+.form__button--red { background-color: $red; }
+.form__button--blue { background-color: $blue; }
