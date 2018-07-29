@@ -1,0 +1,20 @@
+// Place all the styles related to the Text controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.TextAdd {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+}
+
+.TextAdd__panel {
+  border: 1px solid black;
+  flex: 0 1 1;
+  width: 50%;
+}
+
+.TextAdd__textarea {
+  height: 100%;
+  width: 100%;
+}

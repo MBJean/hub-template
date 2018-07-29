@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   root "dashboard#index"
 
   get "users/profile" => "user#show", as: :user_profile
+  get "text" => "text#index", as: :text_dashboard
   post '/dictionary', to: 'dictionary#search', as: 'dictionary'
-  
+
 end
