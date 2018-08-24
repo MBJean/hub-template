@@ -1,0 +1,53 @@
+{
+  "title_primary": "Amores",
+  "title_secondary": "1",
+  "title_tertiary": "1",
+  "title_quaternary": "",
+  "author": "Ovid",
+  "lines": [
+    {
+      "line_number": 1,
+      "text": "Arma gravi numero violentaque bella parabam",
+      "comments": [
+      ],
+      "translations": [
+      ]
+    },
+    {
+      "line_number": 2,
+      "text": "Edere, materia conveniente modis.",
+      "comments": [
+      ],
+      "translations": [
+      ]
+    },
+    {
+      "line_number": 3,
+      "text": "Par erat inferior versus: risisse Cupido",
+      "comments": [
+        {
+          "ind_start": "27",
+          "ind_end": "40",
+          "text": "When you see an infinitive in indirect speech but don't yet know what is introducing the infinitive, try just translating it as if it were an indicative verb until you know more.",
+          "author": "M. Jean"
+        }
+      ],
+      "translations": [
+      ]
+    },
+    {
+      "line_number": 4,
+      "text": "Dicitur atque unum surripuisse pedem.",
+      "comments": [
+      ],
+      "translations": [
+        {
+          "ind_start": "31",
+          "ind_end": "35",
+          "text": "So it's said, and snatched away one foot.",
+          "author": "M. Jean"
+        }
+      ]
+    }
+  ]
+}

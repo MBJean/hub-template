@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@material/layout-grid@^0.34.0":
+  version "0.34.0"
+  resolved "https://registry.yarnpkg.com/@material/layout-grid/-/layout-grid-0.34.0.tgz#f730bdd962401b691ab7538e7d2b4d91764f4052"
+
 "@rails/webpacker@3.5":
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-3.5.3.tgz#8be7f4bfb1ce6f00c3456cbbe3dc363ca72bafc8"
