@@ -6,7 +6,8 @@
   "author": "Ovid",
   "lines": [
     {
-      "line_number": 1,
+      "id": "1",
+      "line_number": "1",
       "text": "Arma gravi numero violentaque bella parabam",
       "comments": [
       ],
@@ -14,7 +15,8 @@
       ]
     },
     {
-      "line_number": 2,
+      "id": "2",
+      "line_number": "2",
       "text": "Edere, materia conveniente modis.",
       "comments": [
       ],
@@ -22,30 +24,49 @@
       ]
     },
     {
-      "line_number": 3,
+      "id": "3",
+      "line_number": "3",
       "text": "Par erat inferior versus: risisse Cupido",
       "comments": [
         {
-          "ind_start": "27",
-          "ind_end": "40",
-          "text": "When you see an infinitive in indirect speech but don't yet know what is introducing the infinitive, try just translating it as if it were an indicative verb until you know more.",
-          "author": "M. Jean"
+          "id": "1",
+          "ind_start": "26",
+          "ind_end": "33",
+          "entries": [
+            {
+              "id": "1",
+              "text": "When you see an infinitive in indirect speech but don't yet know what is introducing the infinitive, try just translating it as if it were an indicative verb until you know more.",
+              "author": "M. Jean"
+            },
+            {
+              "id": "2",
+              "text": "Despite the general rule that the subject of verbs in indirect speech are rendered in the accusative case, becasue of the specific verb used to introduce this indirect expression, the indirect subject here will be in the nominative.",
+              "author": "M. Jean"
+            }
+          ]
         }
       ],
       "translations": [
       ]
     },
     {
-      "line_number": 4,
+      "id": "4",
+      "line_number": "4",
       "text": "Dicitur atque unum surripuisse pedem.",
       "comments": [
       ],
       "translations": [
         {
+          "id": "1",
           "ind_start": "31",
-          "ind_end": "35",
-          "text": "So it's said, and snatched away one foot.",
-          "author": "M. Jean"
+          "ind_end": "36",
+          "entries": [
+            {
+              "id": "1",
+              "text": "So it's said, and snatched away one foot.",
+              "author": "M. Jean"
+            }
+          ]
         }
       ]
     }

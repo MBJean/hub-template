@@ -6,7 +6,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import Highlight from '../components/Highlight';
+import test_json from '../../../lib/data/test_json.json';
 
 document.addEventListener('DOMContentLoaded', () => {
-  !!document.getElementById("Highlight") && ReactDOM.render(<Highlight />, document.getElementById('Highlight'));
+  !!document.getElementById("Highlight") && ReactDOM.render(<Highlight text={test_json}/>, document.getElementById('Highlight'));
 })
