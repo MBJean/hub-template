@@ -1,15 +1,11 @@
 .Highlight,
-.Highlight__text {
+.Highlight__line {
   display: inline-block;
 }
 
-.Highlight__text {
+.Highlight__line {
   font-size: 1.5rem;
   margin: 0.5em 0;
-}
-
-.Highlight__text,
-.Highlight__line {
   position: relative;
 }
 

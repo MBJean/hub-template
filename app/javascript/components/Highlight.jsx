@@ -5,7 +5,7 @@ import createPostBody from '../helpers/createPostBody';
 import renderUnsafeXml from '../helpers/renderUnsafeXml';
 import fetchArray from '../helpers/fetchArray';
 import parseXml from '../helpers/parseXml';
-import Text from './Highlight/Text';
+import Line from './Highlight/Line';
 import Entry from './Highlight/Entry';
 
 export default class Highlight extends Component {
@@ -57,17 +57,14 @@ export default class Highlight extends Component {
     });
   }
 
-  onMouseUpText = () => {
-    /*
+  onMouseUpText = (e) => {
     // use the getSelection API to capture user selection
       // checks against a selection of nothing
         // baseOffset represent index of beginning of selection, focusOffset represents final index of selection
-    document.getElementById("Highlight__lines").onmouseup = function() {
-      let t = (document.all) ? document.selection.createRange().text : document.getSelection();
-      if (t.baseOffset !== t.focusOffset) {
-        console.log(t);
-        console.log( t.focusNode.nodeValue.substring(t.baseOffset, t.focusOffset) );
-      }
+    let t = (document.all) ? document.selection.createRange().text : document.getSelection();
+    if (t.baseOffset !== t.focusOffset) {
+      console.log(t);
+      console.log( t.focusNode.nodeValue.substring(t.baseOffset, t.focusOffset) );
     }
     // TODO: account for when highlight moves over multiple lines
       // could equality check anchorNode.nodeValue and focusNode.nodeValue
@@ -80,21 +77,21 @@ export default class Highlight extends Component {
         // render on page all highlighted text, keying comment to them in the rendered elements below
     // TODO: create editor feature
     // TODO: have editor feature appear on highlight
-    */
   }
 
   render() {
     return (
       <div className="Highlight">
-        <div className="Highlight__lines" id="Highlight__lines" onMouseUp={this.onMouseUpText}>
+        <div className="Highlight__lines" id="Highlight__lines">
           {
             this.props.text.lines.map( line => {
               return (
-                <div className="Highlight__line" key={line.id}>
-                  <Text line={line} onClickHighlight={this.onClickHighlight}/>
+                <div>
+                  <Line key={line.id} line={line} onClickHighlight={this.onClickHighlight} onMouseUpText={this.onMouseUpText} />
+                  <br/>
                 </div>
               );
-            })
+            } )
           }
         </div>
         <div className={`Highlight__content Highlight__content--${this.state.is_active_content ? 'active': 'inactive'}`}>

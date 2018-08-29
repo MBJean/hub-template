@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const Text = props => {
+const Line = props => {
   return (
-    <p className="Highlight__text">{props.line.text}
+    <p className="Highlight__line" onMouseUp={props.onMouseUpText}>{props.line.text}
       {
         props.line.comments.map( comment => {
           return <span
@@ -18,7 +18,7 @@ const Text = props => {
                     {
                       top: 0,
                       left: (((comment.ind_start - 1) / props.line.text.length) * 100) + '%',
-                      width: (((comment.ind_end - comment.ind_start) / props.line.text.length) * 100) + '%'
+                      width: Math.ceil(((comment.ind_end - comment.ind_start) / props.line.text.length) * 100) + '%'
                     }
                   }></span>
         })
@@ -37,7 +37,7 @@ const Text = props => {
                     {
                       top: 0,
                       left: (((translation.ind_start - 1) / props.line.text.length) * 100) + '%',
-                      width: (((translation.ind_end - translation.ind_start) / props.line.text.length) * 100) + '%'
+                      width: Math.ceil(((translation.ind_end - translation.ind_start) / props.line.text.length) * 100) + '%'
                     }
                   }></span>
         })
@@ -46,9 +46,10 @@ const Text = props => {
   )
 }
 
-Text.propTypes = {
+Line.propTypes = {
   line: PropTypes.object.isRequired,
   onClickHighlight: PropTypes.func.isRequired,
+  onMouseUpText: PropTypes.func.isRequired
 };
 
-export default Text;
+export default Line;
