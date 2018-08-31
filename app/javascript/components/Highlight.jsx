@@ -18,6 +18,7 @@ export default class Highlight extends Component {
   }
 
   componentWillMount = () => {
+    /*
     let new_comments_active = [];
     let new_translations_active = [];
     this.props.text.lines.forEach( line => {
@@ -28,6 +29,7 @@ export default class Highlight extends Component {
       comments_active: new_comments_active,
       translations_active: new_translations_active
     });
+    */
   }
 
   onClickHighlight = (options) => {
@@ -80,40 +82,72 @@ export default class Highlight extends Component {
   }
 
   render() {
+    let output_arr = [];
+    for (let i = 0; i < this.props.json_data.lines.length; i++) {
+      let line = this.props.json_data.lines[i];
+      for (let j = 0; j < line.text.split(' ').length; j++) {
+        let word = line.text.split(' ')[j];
+        let annotations = this.props.json_data.annotations;
+        let num = line.line_number;
+        if (num in annotations) {
+          if (j in annotations[num]) {
+            let lem = annotations[num][j].lemmata;
+            output_arr.push(<a href="#" key={`${num}-${j}`}>{lem.join('\n')}</a>);
+            // move line counter up equal to number of 'lines' in the lemmata
+            if (lem.length > 1) {
+              i += lem.length;
+            }
+            // move word counter up equal to number of words in the final 'line' of the lemmata
+            j += lem[lem.length - 1].length;
+          } else {
+            output_arr.push(word);
+          }
+        } else {
+          output_arr.push(word);
+        }
+        j < line.text.split(' ').length - 1 ? output_arr.push(' '): null;
+      }
+      output_arr.push('\n');
+    }
     return (
       <div className="Highlight">
-        <div className="Highlight__lines" id="Highlight__lines">
+        <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
           {
-            this.props.text.lines.map( line => {
+            output_arr.map( el => el )
+              /*
               return (
                 <div>
                   <Line key={line.id} line={line} onClickHighlight={this.onClickHighlight} onMouseUpText={this.onMouseUpText} />
                   <br/>
                 </div>
               );
-            } )
+              */
           }
         </div>
-        <div className={`Highlight__content Highlight__content--${this.state.is_active_content ? 'active': 'inactive'}`}>
-          {
-            this.props.text.lines.map( line => {
-              return line.comments.map( comment => {
-                return this.state.comments_active[line.id].indexOf(comment.id) !== -1 ?
-                  <Entry entry={comment} line={line} onClickHighlight={this.onClickHighlight} type='comment'/>:
-                  null;
+        {
+          /*
+          <div className={`Highlight__content Highlight__content--${this.state.is_active_content ? 'active': 'inactive'}`}>
+            {
+              this.props.text.lines.map( line => {
+                return line.comments.map( comment => {
+                  return this.state.comments_active[line.id].indexOf(comment.id) !== -1 ?
+                    <Entry entry={comment} line={line} onClickHighlight={this.onClickHighlight} type='comment'/>:
+                    null;
+                } )
               } )
-            } )
-          }
-          {
-            this.props.text.lines.map( line => {
-              return line.translations.map( translation => {
-                return this.state.translations_active[line.id].indexOf(translation.id) !== -1 ?
-                  <Entry entry={translation} line={line} onClickHighlight={this.onClickHighlight} type='translation'/>:
-                  null;
+            }
+            {
+              this.props.text.lines.map( line => {
+                return line.translations.map( translation => {
+                  return this.state.translations_active[line.id].indexOf(translation.id) !== -1 ?
+                    <Entry entry={translation} line={line} onClickHighlight={this.onClickHighlight} type='translation'/>:
+                    null;
+                } )
               } )
-            } )
-          }
-        </div>
+            }
+          </div>
+          */
+        }
       </div>
     )
   }

@@ -8,67 +8,78 @@
     {
       "id": "1",
       "line_number": "1",
-      "text": "Arma gravi numero violentaque bella parabam",
-      "comments": [
-      ],
-      "translations": [
-      ]
+      "text": "Arma gravi numero violentaque bella parabam"
     },
     {
       "id": "2",
       "line_number": "2",
-      "text": "Edere, materia conveniente modis.",
-      "comments": [
-      ],
-      "translations": [
-      ]
+      "text": "Edere, materia conveniente modis."
     },
     {
       "id": "3",
       "line_number": "3",
-      "text": "Par erat inferior versus: risisse Cupido",
-      "comments": [
-        {
-          "id": "1",
-          "ind_start": "26",
-          "ind_end": "33",
-          "entries": [
-            {
-              "id": "1",
-              "text": "When you see an infinitive in indirect speech but don't yet know what is introducing the infinitive, try just translating it as if it were an indicative verb until you know more.",
-              "author": "M. Jean"
-            },
-            {
-              "id": "2",
-              "text": "Despite the general rule that the subject of verbs in indirect speech are rendered in the accusative case, becasue of the specific verb used to introduce this indirect expression, the indirect subject here will be in the nominative.",
-              "author": "M. Jean"
-            }
-          ]
-        }
-      ],
-      "translations": [
-      ]
+      "text": "Par erat inferior versus: risisse Cupido"
     },
     {
       "id": "4",
       "line_number": "4",
-      "text": "Dicitur atque unum surripuisse pedem.",
-      "comments": [
-      ],
-      "translations": [
-        {
-          "id": "1",
-          "ind_start": "31",
-          "ind_end": "37",
-          "entries": [
-            {
-              "id": "1",
-              "text": "So it's said, and snatched away one foot.",
-              "author": "M. Jean"
-            }
-          ]
-        }
-      ]
+      "text": "Dicitur atque unum surripuisse pedem."
     }
-  ]
+  ],
+  "annotations": {
+    "3": {
+      "4": {
+        "id": "1",
+        "type": "comment",
+        "line_start": "3",
+        "line_end": "3",
+        "ind_start": "4",
+        "ind_end": "5",
+        "lemmata": ["risisse"],
+        "entries": [
+          {
+            "id": "1",
+            "text": "When you see an infinitive in indirect speech but don't yet know what is introducing the infinitive, try just translating it as if it were an indicative verb until you know more.",
+            "author": "M. Jean"
+          }
+        ],
+        "author": "M. Jean"
+      },
+      "5": {
+        "id": "2",
+        "type": "comment",
+        "line_start": "3",
+        "line_end": "3",
+        "ind_start": "5",
+        "ind_end": "6",
+        "lemmata": ["Cupido"],
+        "entries": [
+          {
+            "id": "1",
+            "text": "Despite the general rule that the subject of verbs in indirect speech are rendered in the accusative case, becasue of the specific verb used to introduce this indirect expression, the indirect subject here will be in the nominative.",
+            "author": "M. Jean"
+          }
+        ],
+        "author": "M. Jean"
+      }
+    },
+    "4": [
+      {
+        "id": "1",
+        "type": "translation",
+        "line_start": "4",
+        "line_end": "4",
+        "ind_start": "0",
+        "ind_end": "5",
+        "lemmata": ["Dicitur atque unum surripuisse pedem."],
+        "entries": [
+          {
+            "id": "1",
+            "text": "So it's said, and snatched away one foot.",
+            "author": "M. Jean"
+          }
+        ]
+      }
+    ]
+  }
 }

@@ -9,5 +9,5 @@ import Highlight from '../components/Highlight';
 import test_json from '../../../lib/data/test_json.json';
 
 document.addEventListener('DOMContentLoaded', () => {
-  !!document.getElementById("Highlight") && ReactDOM.render(<Highlight text={test_json}/>, document.getElementById('Highlight'));
+  !!document.getElementById("Highlight") && ReactDOM.render(<Highlight json_data={test_json}/>, document.getElementById('Highlight'));
 })
