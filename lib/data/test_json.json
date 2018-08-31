@@ -24,6 +24,136 @@
       "id": "4",
       "line_number": "4",
       "text": "Dicitur atque unum surripuisse pedem."
+    },
+    {
+      "id": "5",
+      "line_number": "5",
+      "text": "'Quis tibi, saeve puer, dedit hoc in carmina iuris?"
+    },
+    {
+      "id": "6",
+      "line_number": "6",
+      "text": "Pieridum vates, non tua turba sumus."
+    },
+    {
+      "id": "7",
+      "line_number": "7",
+      "text": "quid, si praeripiat flavae Venus arma Minervae,"
+    },
+    {
+      "id": "8",
+      "line_number": "8",
+      "text": "ventilet accensas flava Minerva faces?"
+    },
+    {
+      "id": "9",
+      "line_number": "9",
+      "text": "quis probet in silvis Cererem regnare iugosis,"
+    },
+    {
+      "id": "10",
+      "line_number": "10",
+      "text": "lege pharetratae Virginis arva coli?"
+    },
+    {
+      "id": "11",
+      "line_number": "11",
+      "text": "crinibus insignem quis acuta cuspide Phoebum"
+    },
+    {
+      "id": "12",
+      "line_number": "12",
+      "text": "instruat, Aoniam Marte movente lyram?"
+    },
+    {
+      "id": "13",
+      "line_number": "13",
+      "text": "sunt tibi magna, puer, nimiumque potentia regna;"
+    },
+    {
+      "id": "14",
+      "line_number": "14",
+      "text": "cur opus adfectas, ambitiose, novum?"
+    },
+    {
+      "id": "15",
+      "line_number": "15",
+      "text": "an, quod ubique, tuum est? tua sunt Heliconia tempe?"
+    },
+    {
+      "id": "16",
+      "line_number": "16",
+      "text": "vix etiam Phoebo iam lyra tuta sua est?"
+    },
+    {
+      "id": "17",
+      "line_number": "17",
+      "text": "cum bene surrexit versu nova pagina primo,"
+    },
+    {
+      "id": "18",
+      "line_number": "18",
+      "text": "attenuat nervos proximus ille meos;"
+    },
+    {
+      "id": "19",
+      "line_number": "19",
+      "text": "nec mihi materia est numeris levioribus apta,"
+    },
+    {
+      "id": "20",
+      "line_number": "20",
+      "text": "aut puer aut longas compta puella comas.'"
+    },
+    {
+      "id": "21",
+      "line_number": "21",
+      "text": "Questus eram, pharetra cum protinus ille soluta"
+    },
+    {
+      "id": "22",
+      "line_number": "22",
+      "text": "legit in exitium spicula facta meum,"
+    },
+    {
+      "id": "23",
+      "line_number": "23",
+      "text": "lunavitque genu sinuosum fortiter arcum,"
+    },
+    {
+      "id": "24",
+      "line_number": "24",
+      "text": "'quod' que 'canas, vates, accipe' dixit 'opus!'"
+    },
+    {
+      "id": "25",
+      "line_number": "25",
+      "text": "Me miserum! certas habuit puer ille sagittas."
+    },
+    {
+      "id": "26",
+      "line_number": "26",
+      "text": "uror, et in vacuo pectore regnat Amor."
+    },
+    {
+      "id": "27",
+      "line_number": "27",
+      "text": "Sex mihi surgat opus numeris, in quinque residat:"
+    },
+    {
+      "id": "28",
+      "line_number": "28",
+      "text": "ferrea cum vestris bella valete modis!"
+    },
+    {
+      "id": "29",
+      "line_number": "29",
+      "text": "cingere litorea flaventia tempora myrto,"
+    },
+    {
+      "id": "30",
+      "line_number": "30",
+      "text": "Musa, per undenos emodulanda pedes!"
     }
   ],
   "annotations": {
@@ -63,8 +193,8 @@
         "author": "M. Jean"
       }
     },
-    "4": [
-      {
+    "4": {
+      "0": {
         "id": "1",
         "type": "translation",
         "line_start": "4",
@@ -80,6 +210,24 @@
           }
         ]
       }
-    ]
+    },
+    "11": {
+      "5": {
+        "id": "1",
+        "type": "comment",
+        "line_start": "11",
+        "line_end": "12",
+        "ind_start": "5",
+        "ind_end": "1",
+        "lemmata": ["Phoebum", "instruat"],
+        "entries": [
+          {
+            "id": "1",
+            "text": "Enjambment.",
+            "author": "M. Jean"
+          }
+        ]
+      }
+    }
   }
 }

@@ -11,51 +11,18 @@ import Entry from './Highlight/Entry';
 export default class Highlight extends Component {
 
   state = {
-    comments_active: {},
-    is_active_content: false,
-    num_active: 0,
-    translations_active: {}
+    anootations_active: false,
+    annotations: []
   }
 
-  componentWillMount = () => {
-    /*
-    let new_comments_active = [];
-    let new_translations_active = [];
-    this.props.text.lines.forEach( line => {
-      new_comments_active[line.id] = [];
-      new_translations_active[line.id] = [];
-    });
+  onClickHighlight = (annotations) => {
+    console.log(annotations);
+    let hold_arr = [...this.state.annotations];
+    hold_arr.push(annotations);
+    let hold_active = hold_arr.length > 0 ? true: false;
     this.setState({
-      comments_active: new_comments_active,
-      translations_active: new_translations_active
-    });
-    */
-  }
-
-  onClickHighlight = (options) => {
-    let new_arr = [];
-    let new_num_active = this.state.num_active;
-    switch (options.type) {
-      case "comment":
-        new_arr = {...this.state.comments_active};
-      break;
-      case "translation":
-        new_arr = {...this.state.translations_active};
-      break;
-      default:
-      break;
-    }
-    if (new_arr[options.line_id].indexOf(options.entry_id) !== -1) {
-      new_arr[options.line_id].splice(new_arr[options.line_id].indexOf(options.entry_id), 1);
-      new_num_active--;
-    } else {
-      new_arr[options.line_id].push(options.entry_id);
-      new_num_active++;
-    }
-    this.setState({
-      is_active_content: new_num_active > 0 ? true: false,
-      num_active: new_num_active,
-      translations_active: new_arr
+      annotations_active: hold_active,
+      annotations: hold_arr
     });
   }
 
@@ -64,9 +31,10 @@ export default class Highlight extends Component {
       // checks against a selection of nothing
         // baseOffset represent index of beginning of selection, focusOffset represents final index of selection
     let t = (document.all) ? document.selection.createRange().text : document.getSelection();
+    console.log(t);
     if (t.baseOffset !== t.focusOffset) {
-      console.log(t);
-      console.log( t.focusNode.nodeValue.substring(t.baseOffset, t.focusOffset) );
+      //console.log(t);
+      //console.log( t.focusNode.nodeValue.substring(t.baseOffset, t.focusOffset) );
     }
     // TODO: account for when highlight moves over multiple lines
       // could equality check anchorNode.nodeValue and focusNode.nodeValue
@@ -83,22 +51,34 @@ export default class Highlight extends Component {
 
   render() {
     let output_arr = [];
+    let counter_j = 0;
+    let skip_lines = false;
     for (let i = 0; i < this.props.json_data.lines.length; i++) {
+      if (skip_lines) {
+        skip_lines = false;
+      } else {
+        counter_j = 0;
+      }
       let line = this.props.json_data.lines[i];
-      for (let j = 0; j < line.text.split(' ').length; j++) {
+      for (let j = counter_j; j < line.text.split(' ').length; j++) {
         let word = line.text.split(' ')[j];
         let annotations = this.props.json_data.annotations;
         let num = line.line_number;
         if (num in annotations) {
           if (j in annotations[num]) {
             let lem = annotations[num][j].lemmata;
-            output_arr.push(<a href="#" key={`${num}-${j}`}>{lem.join('\n')}</a>);
+            output_arr.push(<mark className="Highlight__highlight" key={`${num}-${j}`} onClick={ () => {this.onClickHighlight(annotations[num][j])} }>{lem.join('\n')}</mark>);
             // move line counter up equal to number of 'lines' in the lemmata
-            if (lem.length > 1) {
-              i += lem.length;
-            }
             // move word counter up equal to number of words in the final 'line' of the lemmata
-            j += lem[lem.length - 1].length;
+            if (lem.length > 1) {
+              i += lem.length - 2;
+              skip_lines = true;
+              j = line.text.split(' ').length;
+              counter_j = lem[lem.length - 1].split(' ').length;
+              output_arr.push(' ');
+            } else {
+              j = j + lem[lem.length - 1].split(' ').length - 1;
+            }
           } else {
             output_arr.push(word);
           }
@@ -107,47 +87,22 @@ export default class Highlight extends Component {
         }
         j < line.text.split(' ').length - 1 ? output_arr.push(' '): null;
       }
-      output_arr.push('\n');
+      !skip_lines ? output_arr.push('\n'): null;
     }
     return (
       <div className="Highlight">
-        <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
+        <div className="Highlight__lines" id="Highlight__lines" onMouseUp={this.onMouseUpText} style={{ whiteSpace: 'pre-line' }}>
           {
             output_arr.map( el => el )
-              /*
-              return (
-                <div>
-                  <Line key={line.id} line={line} onClickHighlight={this.onClickHighlight} onMouseUpText={this.onMouseUpText} />
-                  <br/>
-                </div>
-              );
-              */
           }
         </div>
+        <div className={`Highlight__content ${this.state.annotations_active ? 'Highlight__content--active': 'Highlight__content--inactive' }`}>
         {
-          /*
-          <div className={`Highlight__content Highlight__content--${this.state.is_active_content ? 'active': 'inactive'}`}>
-            {
-              this.props.text.lines.map( line => {
-                return line.comments.map( comment => {
-                  return this.state.comments_active[line.id].indexOf(comment.id) !== -1 ?
-                    <Entry entry={comment} line={line} onClickHighlight={this.onClickHighlight} type='comment'/>:
-                    null;
-                } )
-              } )
-            }
-            {
-              this.props.text.lines.map( line => {
-                return line.translations.map( translation => {
-                  return this.state.translations_active[line.id].indexOf(translation.id) !== -1 ?
-                    <Entry entry={translation} line={line} onClickHighlight={this.onClickHighlight} type='translation'/>:
-                    null;
-                } )
-              } )
-            }
-          </div>
-          */
+          this.state.annotations_active ?
+            this.state.annotations.map( annotation => <div>{annotation.entries.map( entry => <div><p>{ entry.text }</p><p>{ entry.author }</p></div> )}</div>):
+            null
         }
+        </div>
       </div>
     )
   }
