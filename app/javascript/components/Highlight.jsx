@@ -16,7 +16,6 @@ export default class Highlight extends Component {
   }
 
   onClickHighlight = (annotations) => {
-    console.log(annotations);
     let hold_arr = [...this.state.annotations];
     hold_arr.push(annotations);
     let hold_active = hold_arr.length > 0 ? true: false;
@@ -67,7 +66,8 @@ export default class Highlight extends Component {
         if (num in annotations) {
           if (j in annotations[num]) {
             let lem = annotations[num][j].lemmata;
-            output_arr.push(<mark className="Highlight__highlight" key={`${num}-${j}`} onClick={ () => {this.onClickHighlight(annotations[num][j])} }>{lem.join('\n')}</mark>);
+            let annotation = annotations[num][j];
+            output_arr.push(<mark className="Highlight__highlight" key={`${num}-${j}`} onClick={ () => {this.onClickHighlight(annotation)} }>{lem.join('\n')}</mark>);
             // move line counter up equal to number of 'lines' in the lemmata
             // move word counter up equal to number of words in the final 'line' of the lemmata
             if (lem.length > 1) {
