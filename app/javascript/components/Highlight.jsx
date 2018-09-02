@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import convertEntities from '../helpers/convertEntities';
-import createPostBody from '../helpers/createPostBody';
-import renderUnsafeXml from '../helpers/renderUnsafeXml';
-import fetchArray from '../helpers/fetchArray';
-import parseXml from '../helpers/parseXml';
+import buildAnnotationObject from '../helpers/buildAnnotationObject';
 import Line from './Highlight/Line';
 import Entry from './Highlight/Entry';
 
@@ -12,7 +8,9 @@ export default class Highlight extends Component {
 
   state = {
     annotations_active: false,
-    annotations: []
+    annotations: [],
+    current_highlight_editing: {},
+    current_editing: false
   }
 
   onClickHighlight = (annotation) => {
@@ -26,41 +24,12 @@ export default class Highlight extends Component {
   }
 
   onMouseUpText = (e) => {
-    let selected_text = (document.all) ? document.selection.createRange().text : document.getSelection();
-    let selected_range = selected_text.getRangeAt(0);
-    let start_coordinates = {
-      line: selected_range.startContainer.parentElement.dataset.line,
-      word: selected_range.startContainer.parentElement.dataset.word
-    };
-    let end_coordinates = {
-      line: selected_range.endContainer.parentElement.dataset.line,
-      word: selected_range.endContainer.parentElement.dataset.word
-    };
-    // check if any of the above is undefined, which would indicated that a mark element has been highlighted
-    // also check if anything inside the range has undefined datasets for the above, excluding newline characters
-    let done = false;
-    let any_marks_inside = false;
-    let current_node = selected_range.startContainer.parentNode;
-    let end_node = selected_range.endContainer.parentNode;
-    while(!done) {
-      if (current_node.data === '\n') {
-        current_node = current_node.nextSibling;
-      } else if (current_node.dataset.word === undefined) {
-        any_marks_inside = true;
-        done = true;
-      } else if (current_node === end_node) {
-        done = true;
-      } else {
-        current_node = current_node.nextSibling;
-      }
-    }
-    if (any_marks_inside || start_coordinates.word === undefined || end_coordinates.word === undefined) {
-      selected_text.removeRange(selected_range);
-    } else {
-      // build an object that conforms to middleware expectations
-      console.log({
-        line: start_coordinates.line
-      });
+    let annotation_object = buildAnnotationObject();
+    if (annotation_object.error === null) {
+      this.setState({
+        current_highlight_editing: annotation_object.response,
+        current_editing: true
+      }, () => console.log(this.state.current_highlight_editing) );
     }
   }
 
@@ -89,7 +58,9 @@ export default class Highlight extends Component {
               <mark
                 className={ `Highlight__highlight Highlight__highlight--${ this.state.annotations.find( obj => obj.id === annotation_by_word.id && obj.start === annotation_by_word.start ) !== undefined ? 'active': 'inactive'}` }
                 key={`highlight-${annotations_by_line.line}-${annotation_by_word.start}`}
-                onClick={ () => {this.onClickHighlight(annotation_by_word)} }>{lem.join('\n')} </mark>
+                onClick={ () => {this.onClickHighlight(annotation_by_word)} }
+                onMouseUp={this.onMouseUpText}>
+                {lem.join('\n')} </mark>
             ));
             // move line counter up equal to number of 'lines' in the lemmata
             // move word counter up equal to number of words in the final 'line' of the lemmata
@@ -108,7 +79,8 @@ export default class Highlight extends Component {
                 className="Highlight__word"
                 data-line={line.line_number}
                 data-word={j}
-                key={`word-${line.line_number}-${j}`}>
+                key={`word-${line.line_number}-${j}`}
+                onMouseUp={this.onMouseUpText}>
                 {word} </span>
             ));
           }
@@ -118,7 +90,8 @@ export default class Highlight extends Component {
               className="Highlight__word"
               data-line={line.line_number}
               data-word={j}
-              key={`word-${line.line_number}-${j}`}>
+              key={`word-${line.line_number}-${j}`}
+              onMouseUp={this.onMouseUpText}>
               {word} </span>
           ));
         }
@@ -127,7 +100,7 @@ export default class Highlight extends Component {
     }
     return (
       <div className="Highlight">
-        <div className="Highlight__lines" id="Highlight__lines" onMouseUp={this.onMouseUpText} style={{ whiteSpace: 'pre-line' }}>
+        <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
           { output_arr }
         </div>
         <div className={`Highlight__content ${this.state.annotations_active ? 'Highlight__content--active': 'Highlight__content--inactive' }`}>
