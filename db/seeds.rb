@@ -81,3 +81,39 @@ annotation_2 = Annotation.create(
   :lemma => "Cupido",
   :start_index => 5
 )
+
+dummy_book_3 = Book.find_by text_id: ovid_amores.id, book_number: '1'
+dummy_section_3 = Section.find_by book_id: dummy_book_1.id, identifier: '1'
+dummy_line_3 = Line.find_by section_id: dummy_section_1.id, line_number: '4'
+annotation_3 = Annotation.create(
+  :line_id => dummy_line_3.id,
+  :section_id => dummy_section_3.id,
+  :content => "So it's said, and snatched away one foot.",
+  :user_id => dummy_user.id,
+  :lemma => "Dicitur atque unum surripuisse pedem.",
+  :start_index => 0
+)
+
+dummy_book_4 = Book.find_by text_id: ovid_amores.id, book_number: '1'
+dummy_section_4 = Section.find_by book_id: dummy_book_1.id, identifier: '1'
+dummy_line_4 = Line.find_by section_id: dummy_section_1.id, line_number: '11'
+annotation_4 = Annotation.create(
+  :line_id => dummy_line_4.id,
+  :section_id => dummy_section_4.id,
+  :content => "Enjambment.",
+  :user_id => dummy_user.id,
+  :lemma => "Phoebum \n instruat,",
+  :start_index => 5
+)
+
+dummy_book_5 = Book.find_by text_id: ovid_amores.id, book_number: '1'
+dummy_section_5 = Section.find_by book_id: dummy_book_1.id, identifier: '1'
+dummy_line_5 = Line.find_by section_id: dummy_section_1.id, line_number: '13'
+annotation_5 = Annotation.create(
+  :line_id => dummy_line_5.id,
+  :section_id => dummy_section_5.id,
+  :content => "Referring to Cupid",
+  :user_id => dummy_user.id,
+  :lemma => "puer,",
+  :start_index => 3
+)

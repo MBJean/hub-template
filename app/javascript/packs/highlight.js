@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let section_id = document.getElementById("Highlight").dataset.section;
     ReactDOM.render(
       <Highlight
-        json_data={test_json}
         options={
           {
             author_id: author_id,

@@ -42,19 +42,19 @@ const buildAnnotationObject = () => {
       response: null
     };
   } else {
-    // walk through nodes to find all relevant text to build lemmata 2d array (with 2nd dimension indicating line breaks)
+    // walk through nodes to find all relevant text to build lemma 2d array (with 2nd dimension indicating line breaks)
     done = false;
     current_node = selected_range.startContainer.parentNode;
-    let lemmata_arr = [];
+    let lemma_arr = [];
     let temp_str = "";
     while(!done) {
       if (current_node.data === '\n') {
-        lemmata_arr.push(temp_str.trim());
+        lemma_arr.push(temp_str.trim());
         temp_str = "";
         current_node = current_node.nextSibling;
       } else if (current_node === end_node) {
         temp_str += current_node.innerText;
-        lemmata_arr.push(temp_str.trim());
+        lemma_arr.push(temp_str.trim());
         done = true;
       } else {
         temp_str += current_node.innerText;
@@ -67,7 +67,7 @@ const buildAnnotationObject = () => {
       response: {
         line: coordinates.start.line,
         start: coordinates.start.word,
-        lemmata: lemmata_arr,
+        lemma: lemma_arr.join('\n'),
         annotation: {
           author: "",
           text: ""

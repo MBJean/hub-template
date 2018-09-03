@@ -10,13 +10,31 @@ export default class Highlight extends Component {
     annotations_active: false,
     annotations: [],
     current_highlight_editing: {},
+    data: {
+      lines: [],
+      annotations: []
+    },
     editing_active: false
   }
 
-  onClickHighlight = (annotation) => {
+  componentDidMount = () => {
+    fetch(`/api/v1/section/${this.props.options.section_id}`)
+      .then(
+        response => response.json().then( json => {
+          let output_json = {...json};
+          output_json.lines.sort( (a, b) => a.id > b.id ? 1: -1 );
+          this.setState({ data: output_json })
+        }),
+        error => error
+      );
+  }
+
+  onClickHighlight = (annotations_array) => {
     let temp_arr = [...this.state.annotations];
-    let temp_ind = temp_arr.findIndex( obj => obj.id === annotation.id && obj.start === annotation.start );
-    temp_ind === -1 ? temp_arr.push(annotation): temp_arr.splice(temp_ind, 1);
+    annotations_array.forEach( annotation => {
+      let temp_ind = temp_arr.findIndex( obj => obj.id === annotation.id && obj.start === annotation.start );
+      temp_ind === -1 ? temp_arr.push(annotation): temp_arr.splice(temp_ind, 1);
+    });
     this.setState({
       annotations_active: temp_arr.length > 0,
       annotations: temp_arr,
@@ -35,6 +53,7 @@ export default class Highlight extends Component {
 
   onMouseUpText = (e) => {
     let annotation_object = buildAnnotationObject();
+    console.log(annotation_object);
     if (annotation_object.error === null) {
       this.setState({
         annotations_active: false,
@@ -54,41 +73,41 @@ export default class Highlight extends Component {
     let output_arr = [];
     let counter_j = 0;
     let skip_lines = false;
-    for (let i = 0; i < this.props.json_data.lines.length; i++) {
+    for (let i = 0; i < this.state.data.lines.length; i++) {
       if (skip_lines) {
         skip_lines = false;
       } else {
         counter_j = 0;
       }
-      let line = this.props.json_data.lines[i];
-      let line_by_word = line.text.split(' ');
+      let line = this.state.data.lines[i];
+      let line_by_word = line.content.split(' ');
       for (let j = counter_j; j < line_by_word.length; j++) {
         let word = line_by_word[j];
-        let annotations = this.props.json_data.annotations;
+        let annotations = this.state.data.annotations;
         let num = line.line_number;
-        let annotations_by_line = annotations.find( annotation => annotation.line == num );
-        if (annotations_by_line !== undefined) {
-          let annotation_by_word = annotations_by_line.entries.find( entry => entry.start == j );
-          if (annotation_by_word !== undefined) {
-            let lem = annotation_by_word.lemmata;
+        let annotations_by_line = annotations.filter( annotation => annotation.line_id == line.id );
+        if (annotations_by_line.length > 0) {
+          let annotations_by_word = annotations_by_line.filter( entry => entry.start_index == j );
+          if (annotations_by_word.length > 0) {
+            let lemma = annotations_by_word[0].lemma;
             output_arr.push((
               <mark
-                className={ `Highlight__highlight Highlight__highlight--${ this.state.annotations.find( obj => obj.id === annotation_by_word.id && obj.start === annotation_by_word.start ) !== undefined ? 'active': 'inactive'}` }
-                key={`highlight-${annotations_by_line.line}-${annotation_by_word.start}`}
-                onClick={ () => {this.onClickHighlight(annotation_by_word)} }
+                className={ `Highlight__highlight Highlight__highlight--${ this.state.annotations.find( obj => obj.id === annotations_by_word.id && obj.start === annotations_by_word.start ) !== undefined ? 'active': 'inactive'}` }
+                key={`highlight-${annotations_by_line[0].line_id}-${annotations_by_word[0].start_index}`}
+                onClick={ () => {this.onClickHighlight(annotations_by_word)} }
                 onMouseUp={this.onMouseUpText}>
-                {lem.join('\n')} </mark>
+                {lemma} </mark>
             ));
             // move line counter up equal to number of 'lines' in the lemmata
             // move word counter up equal to number of words in the final 'line' of the lemmata
-            if (lem.length > 1) {
-              i += lem.length - 2;
+            if (lemma.split('\n').length > 1) {
+              i += lemma.split('\n').length - 2;
               skip_lines = true;
               j = line_by_word.length;
-              counter_j = lem[lem.length - 1].split(' ').length;
+              counter_j = lemma.split('\n')[lemma.split('\n').length - 1].split(' ').length - 1;
               output_arr.push(' ');
             } else {
-              j = j + lem[lem.length - 1].split(' ').length - 1;
+              j = j + lemma.split('\n')[lemma.split('\n').length - 1].split(' ').length - 1;
             }
           } else {
             output_arr.push((
@@ -124,16 +143,12 @@ export default class Highlight extends Component {
         {
           this.state.annotations_active ?
             this.state.annotations.map( annotation => (
-              <div className="Highlight__entry" key={`annotations-${annotation.id}-${annotation.start}`}>
-                <p><b>{annotation.lemmata.join(' ')}</b></p>
-                {
-                  annotation.entries.map( (entry, index) => (
-                    <div className="Highlight__text" key={`annotation-${entry.id}`}>
-                      <p>{ entry.text }</p>
-                      <p>{ entry.author }</p>
-                    </div>
-                  ))
-                }
+              <div className="Highlight__entry" key={`annotations-${annotation.id}-${annotation.start_index}`}>
+                <p><b>{annotation.lemma}</b></p>
+                <div className="Highlight__text">
+                  <p>{ annotation.content }</p>
+                  <p>{ annotation.user_id }</p>
+                </div>
               </div>
             )):
             null
@@ -143,8 +158,8 @@ export default class Highlight extends Component {
             <div className="Highlight__editing">
               <p><b>Add new annotation</b></p>
               <ul className="Highlight__list">
-                <li>Lines(s): {`${ this.state.current_highlight_editing.line} ${this.state.current_highlight_editing.lemmata.length > 1 ? ' - ' + (parseInt(this.state.current_highlight_editing.line) + this.state.current_highlight_editing.lemmata.length - 1): ''}`}</li>
-                <li>Lemma: <i>{`${this.state.current_highlight_editing.lemmata.join(' ')}`}</i></li>
+                <li>Lines(s): {`${ this.state.current_highlight_editing.line}`}</li>
+                <li>Lemma: <i>{`${this.state.current_highlight_editing.lemma}`}</i></li>
               </ul>
               <form onSubmit={this.onSubmitNewAnnotation}>
                 <textarea className="Highlight__textarea" maxLength="1000" onChange={this.onChangeAnnotation} placeholder="Enter new annotation here"></textarea>

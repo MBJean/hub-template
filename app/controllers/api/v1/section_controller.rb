@@ -9,10 +9,8 @@ class Api::V1::SectionController < Api::V1::BaseController
   def show
     section = Section.find(params[:id])
     render json: {
-      :response => {
-        :lines => section.lines,
-        :annotations => section.annotations,
-      }
+      :lines => section.lines,
+      :annotations => section.annotations
     }
   end
 
