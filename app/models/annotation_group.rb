@@ -1,0 +1,2 @@
+class AnnotationGroup < ApplicationRecord
+end
