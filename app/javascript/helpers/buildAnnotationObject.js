@@ -1,4 +1,4 @@
-const buildAnnotationObject = () => {
+const buildAnnotationObject = (options) => {
   let output_object = {
     error: null,
     response: {}
@@ -10,10 +10,12 @@ const buildAnnotationObject = () => {
   let coordinates = {
     start: {
       line: selected_range.startContainer.parentElement.dataset.line,
+      line_id: selected_range.startContainer.parentElement.dataset.lid,
       word: selected_range.startContainer.parentElement.dataset.word
     },
     end: {
       line: selected_range.endContainer.parentElement.dataset.line,
+      line_id: selected_range.endContainer.parentElement.dataset.lid,
       word: selected_range.endContainer.parentElement.dataset.word
     }
   };
@@ -65,13 +67,15 @@ const buildAnnotationObject = () => {
     output_object = {
       error: null,
       response: {
+        author_id: options.author_id,
+        text_id: options.text_id,
+        book_id: options.book_id,
+        section_id: options.section_id,
+        line_id: coordinates.start.line_id,
         line: coordinates.start.line,
-        start: coordinates.start.word,
+        start_index: coordinates.start.word,
         lemma: lemma_arr.join('\n'),
-        annotation: {
-          author: "",
-          text: ""
-        }
+        content: ""
       }
     };
   }

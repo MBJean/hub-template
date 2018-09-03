@@ -3,7 +3,16 @@ class Api::V1::AnnotationController < Api::V1::BaseController
 
   # POST /annotation
   def create
-    render json: { :response => 'POST test' }
+    # TODO: bring user_id into this
+    annotation = Annotation.create(
+      :line_id => params[:payload][:line_id],
+      :section_id => params[:payload][:section_id],
+      :content => params[:payload][:content],
+      :user_id => 1,
+      :lemma => params[:payload][:lemma],
+      :start_index => params[:payload][:start_index]
+    )
+    render json: { :response => 'success' }
   end
 
   # GET /annotation/:id
@@ -23,9 +32,6 @@ class Api::V1::AnnotationController < Api::V1::BaseController
 
   private
 
-  def todo_params
-    # whitelist params
-    params.permit()
-  end
+  # TODO: add params whitelist
 
 end

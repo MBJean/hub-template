@@ -18,6 +18,14 @@ export default class Highlight extends Component {
   }
 
   componentDidMount = () => {
+    this.fetchSection();
+  }
+
+  errorHandler = () => {
+
+  }
+
+  fetchSection = () => {
     fetch(`/api/v1/section/${this.props.options.section_id}`)
       .then(
         response => response.json().then( json => {
@@ -45,15 +53,19 @@ export default class Highlight extends Component {
 
   onChangeAnnotation = (ev) => {
     let temp_obj = {...this.state.current_highlight_editing};
-    temp_obj.annotation.text = ev.target.value;
+    temp_obj.content = ev.target.value;
     this.setState({
       current_highlight_editing: temp_obj
     });
   }
 
   onMouseUpText = (e) => {
-    let annotation_object = buildAnnotationObject();
-    console.log(annotation_object);
+    let annotation_object = buildAnnotationObject({
+      author_id: this.props.options.author_id,
+      text_id: this.props.options.text_id,
+      book_id: this.props.options.book_id,
+      section_id: this.props.options.section_id
+    });
     if (annotation_object.error === null) {
       this.setState({
         annotations_active: false,
@@ -66,7 +78,30 @@ export default class Highlight extends Component {
 
   onSubmitNewAnnotation = (ev) => {
     ev.preventDefault();
-    console.log(this.state.current_highlight_editing);
+    if (this.state.current_highlight_editing.content.length > 0) {
+      fetch(`/api/v1/annotation`, {
+        body: JSON.stringify({"payload": this.state.current_highlight_editing}),
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+          'user-agent': 'Mozilla/4.0 MDN Example',
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+        referrer: 'no-referrer',
+      })
+      .then(
+        response => response.json().then( json => json.response === "success" ? this.reset(): this.errorHandler() ),
+        error => error
+      )
+    }
+    // TODO: add error handling here
+  }
+
+  reset = () => {
+    this.fetchSection();
   }
 
   render() {
@@ -114,6 +149,7 @@ export default class Highlight extends Component {
               <span
                 className="Highlight__word"
                 data-line={line.line_number}
+                data-lid={line.id}
                 data-word={j}
                 key={`word-${line.line_number}-${j}`}
                 onMouseUp={this.onMouseUpText}>
@@ -125,6 +161,7 @@ export default class Highlight extends Component {
             <span
               className="Highlight__word"
               data-line={line.line_number}
+              data-lid={line.id}
               data-word={j}
               key={`word-${line.line_number}-${j}`}
               onMouseUp={this.onMouseUpText}>
