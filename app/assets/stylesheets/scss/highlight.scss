@@ -63,7 +63,7 @@
 }
 */
 
-.Highlight__content--active {
+.Highlight__annotations--active {
   background-color: white;
   width: 40vw; height: 100vh;
   top: 0; right: 0;
@@ -73,15 +73,15 @@
   position: fixed;
 }
 
-.Highlight__content .Highlight__entry {
+.Highlight__annotations .Highlight__entry {
   padding: 1em;
 }
 
-.Highlight__content .Highlight__entry .Highlight__text {
+.Highlight__annotations .Highlight__entry .Highlight__text {
   font-size: 1rem;
 }
 
-.Highlight__content .Highlight__entry:nth-child(even) {
+.Highlight__annotations .Highlight__entry:nth-child(even) {
   background-color: #EFEFEF;
 }
 
@@ -105,6 +105,20 @@
   cursor: pointer;
   opacity: 0.4;
   position: absolute;
+}
+
+.Highlight__editing {
+  padding: 0 2em;
+}
+
+.Highlight__textarea {
+  //margin: 2em;
+  width: 100%;
+}
+
+.Highlight__list {
+  list-style: none;
+  padding: 0;
 }
 
 @keyframes highlight_bubble_in {

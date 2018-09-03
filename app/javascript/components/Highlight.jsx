@@ -10,7 +10,7 @@ export default class Highlight extends Component {
     annotations_active: false,
     annotations: [],
     current_highlight_editing: {},
-    current_editing: false
+    editing_active: false
   }
 
   onClickHighlight = (annotation) => {
@@ -19,7 +19,17 @@ export default class Highlight extends Component {
     temp_ind === -1 ? temp_arr.push(annotation): temp_arr.splice(temp_ind, 1);
     this.setState({
       annotations_active: temp_arr.length > 0,
-      annotations: temp_arr
+      annotations: temp_arr,
+      current_highlight_editing: {},
+      editing_active: false
+    });
+  }
+
+  onChangeAnnotation = (ev) => {
+    let temp_obj = {...this.state.current_highlight_editing};
+    temp_obj.annotation.text = ev.target.value;
+    this.setState({
+      current_highlight_editing: temp_obj
     });
   }
 
@@ -27,10 +37,17 @@ export default class Highlight extends Component {
     let annotation_object = buildAnnotationObject();
     if (annotation_object.error === null) {
       this.setState({
+        annotations_active: false,
+        annotations: [],
         current_highlight_editing: annotation_object.response,
-        current_editing: true
-      }, () => console.log(this.state.current_highlight_editing) );
+        editing_active: true
+      });
     }
+  }
+
+  onSubmitNewAnnotation = (ev) => {
+    ev.preventDefault();
+    console.log(this.state.current_highlight_editing);
   }
 
   render() {
@@ -103,7 +120,7 @@ export default class Highlight extends Component {
         <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
           { output_arr }
         </div>
-        <div className={`Highlight__content ${this.state.annotations_active ? 'Highlight__content--active': 'Highlight__content--inactive' }`}>
+        <div className={`Highlight__annotations ${this.state.annotations_active || this.state.editing_active ? 'Highlight__annotations--active': 'Highlight__annotations--inactive' }`}>
         {
           this.state.annotations_active ?
             this.state.annotations.map( annotation => (
@@ -119,6 +136,21 @@ export default class Highlight extends Component {
                 }
               </div>
             )):
+            null
+        }
+        {
+          this.state.editing_active ?
+            <div className="Highlight__editing">
+              <p><b>Add new annotation</b></p>
+              <ul className="Highlight__list">
+                <li>Lines(s): {`${ this.state.current_highlight_editing.line} ${this.state.current_highlight_editing.lemmata.length > 1 ? ' - ' + (parseInt(this.state.current_highlight_editing.line) + this.state.current_highlight_editing.lemmata.length - 1): ''}`}</li>
+                <li>Lemma: <i>{`${this.state.current_highlight_editing.lemmata.join(' ')}`}</i></li>
+              </ul>
+              <form onSubmit={this.onSubmitNewAnnotation}>
+                <textarea className="Highlight__textarea" maxLength="1000" onChange={this.onChangeAnnotation} placeholder="Enter new annotation here"></textarea>
+                <input type="submit" value="Submit"/>
+              </form>
+            </div>:
             null
         }
         </div>
