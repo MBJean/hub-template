@@ -36,22 +36,16 @@ DATA_AMORES = "#{Rails.root}/lib/data/texts/ovid/amores/text.xml"
 DOC_AMORES = File.open(DATA_AMORES) { |f| Nokogiri::XML(f) }
 DOC_AMORES.xpath("//div1").each do |book|
   new_book = Book.create(
-    :author_id => ovid.id,
     :text_id => ovid_amores.id,
     :book_number => book['n'].to_i
   )
   book.xpath("div2").each do |section|
     new_section = Section.create(
-      :author_id => ovid.id,
-      :text_id => ovid_amores.id,
       :book_id => new_book.id,
       :identifier => section['n'].to_s,
     )
     section.xpath("l").each_with_index do |line, index|
       line = Line.create(
-        :author_id => ovid.id,
-        :text_id => ovid_amores.id,
-        :book_id => new_book.id,
         :section_id => new_section.id,
         :line_number => index + 1,
         :content => line.text.to_s.squish

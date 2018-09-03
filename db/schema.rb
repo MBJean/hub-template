@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180903150610) do
+ActiveRecord::Schema.define(version: 20180903185805) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,37 +18,25 @@ ActiveRecord::Schema.define(version: 20180903150610) do
   create_table "annotation_groups", force: :cascade do |t|
     t.integer "start_index"
     t.string "lemma"
-    t.bigint "author_id"
-    t.bigint "text_id"
-    t.bigint "book_id"
     t.bigint "section_id"
     t.bigint "line_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_annotation_groups_on_author_id"
-    t.index ["book_id"], name: "index_annotation_groups_on_book_id"
     t.index ["line_id"], name: "index_annotation_groups_on_line_id"
     t.index ["section_id"], name: "index_annotation_groups_on_section_id"
-    t.index ["text_id"], name: "index_annotation_groups_on_text_id"
   end
 
   create_table "annotations", force: :cascade do |t|
     t.string "content"
     t.bigint "user_id"
-    t.bigint "author_id"
-    t.bigint "text_id"
-    t.bigint "book_id"
     t.bigint "section_id"
     t.bigint "line_id"
     t.bigint "annotation_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["annotation_group_id"], name: "index_annotations_on_annotation_group_id"
-    t.index ["author_id"], name: "index_annotations_on_author_id"
-    t.index ["book_id"], name: "index_annotations_on_book_id"
     t.index ["line_id"], name: "index_annotations_on_line_id"
     t.index ["section_id"], name: "index_annotations_on_section_id"
-    t.index ["text_id"], name: "index_annotations_on_text_id"
     t.index ["user_id"], name: "index_annotations_on_user_id"
   end
 
@@ -61,11 +49,9 @@ ActiveRecord::Schema.define(version: 20180903150610) do
 
   create_table "books", force: :cascade do |t|
     t.integer "book_number"
-    t.bigint "author_id"
     t.bigint "text_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["text_id"], name: "index_books_on_text_id"
   end
 
@@ -137,18 +123,12 @@ ActiveRecord::Schema.define(version: 20180903150610) do
 
   create_table "lines", force: :cascade do |t|
     t.string "line_number"
-    t.bigint "author_id"
-    t.bigint "text_id"
-    t.bigint "book_id"
     t.bigint "section_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "text"
     t.string "content"
-    t.index ["author_id"], name: "index_lines_on_author_id"
-    t.index ["book_id"], name: "index_lines_on_book_id"
     t.index ["section_id"], name: "index_lines_on_section_id"
-    t.index ["text_id"], name: "index_lines_on_text_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -160,14 +140,10 @@ ActiveRecord::Schema.define(version: 20180903150610) do
 
   create_table "sections", force: :cascade do |t|
     t.string "identifier"
-    t.bigint "author_id"
-    t.bigint "text_id"
     t.bigint "book_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["author_id"], name: "index_sections_on_author_id"
     t.index ["book_id"], name: "index_sections_on_book_id"
-    t.index ["text_id"], name: "index_sections_on_text_id"
   end
 
   create_table "skill_progresses", force: :cascade do |t|
