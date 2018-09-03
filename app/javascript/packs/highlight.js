@@ -9,5 +9,22 @@ import Highlight from '../components/Highlight';
 import test_json from '../../../lib/data/test_json.json';
 
 document.addEventListener('DOMContentLoaded', () => {
-  !!document.getElementById("Highlight") && ReactDOM.render(<Highlight json_data={test_json}/>, document.getElementById('Highlight'));
+  if (!!document.getElementById("Highlight")) {
+    let author_id = document.getElementById("Highlight").dataset.author;
+    let text_id = document.getElementById("Highlight").dataset.text;
+    let book_id = document.getElementById("Highlight").dataset.book;
+    let section_id = document.getElementById("Highlight").dataset.section;
+    ReactDOM.render(
+      <Highlight
+        json_data={test_json}
+        options={
+          {
+            author_id: author_id,
+            text_id: text_id,
+            book_id: book_id,
+            section_id: section_id
+          }
+        }
+      />, document.getElementById('Highlight'));
+  }
 })

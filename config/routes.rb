@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "dashboard#index"
   # routing for author and texts
-  get "authors" => "authors#index"
+  get "authors" => "authors#index", as: :author_path
   get "authors/:short_name" => "authors#by_short_name"
   get "authors/:short_name/:text" => "authors#by_text"
   get "authors/:short_name/:text/:book_number" => "authors#by_book"
