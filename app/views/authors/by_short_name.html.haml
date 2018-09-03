@@ -1,0 +1,5 @@
+.c
+  %h1= @author.name
+  %ul
+    - @texts.each do |text|
+      %li= link_to text.title, "/authors/#{@author.short_name.downcase}/#{text.title.downcase.gsub(' ', '-')}"

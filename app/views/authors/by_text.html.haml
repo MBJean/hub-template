@@ -1,0 +1,5 @@
+.c
+  %h1= @text.title
+  %ul
+    - @books.each do |book|
+      %li= link_to book.book_number, "/authors/#{@author.short_name.downcase}/#{@text.title.downcase.gsub(' ', '-')}/#{book.book_number}"
