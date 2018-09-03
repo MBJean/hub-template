@@ -10,31 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180903185805) do
+ActiveRecord::Schema.define(version: 20180903193942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "annotation_groups", force: :cascade do |t|
-    t.integer "start_index"
-    t.string "lemma"
-    t.bigint "section_id"
-    t.bigint "line_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["line_id"], name: "index_annotation_groups_on_line_id"
-    t.index ["section_id"], name: "index_annotation_groups_on_section_id"
-  end
 
   create_table "annotations", force: :cascade do |t|
     t.string "content"
     t.bigint "user_id"
     t.bigint "section_id"
     t.bigint "line_id"
-    t.bigint "annotation_group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["annotation_group_id"], name: "index_annotations_on_annotation_group_id"
+    t.string "lemma"
+    t.integer "start_index"
     t.index ["line_id"], name: "index_annotations_on_line_id"
     t.index ["section_id"], name: "index_annotations_on_section_id"
     t.index ["user_id"], name: "index_annotations_on_user_id"

@@ -11,7 +11,7 @@ class Api::V1::SectionController < Api::V1::BaseController
     render json: {
       :response => {
         :lines => section.lines,
-        :annotations => section.annotation_groups,
+        :annotations => section.annotations,
       }
     }
   end

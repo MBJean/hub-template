@@ -8,6 +8,10 @@
 
 require "csv"
 
+# dummy user
+dummy_user = User.create! :email => 'michaelbrianjean@gmail.com.com', :password => 'topsecret', :password_confirmation => 'topsecret'
+
+
 # DATA_DICTIONARY = "#{Rails.root}/lib/data/lat-dict-base.xml"
 # DOC_DICT = File.open(DATA_DICTIONARY) { |f| Nokogiri::XML(f) }
 # ENTRIES_DICT = DOC_DICT.xpath("//entryFree")
@@ -53,3 +57,27 @@ DOC_AMORES.xpath("//div1").each do |book|
     end
   end
 end
+# some dummy annotations to test functionality
+dummy_book_1 = Book.find_by text_id: ovid_amores.id, book_number: '1'
+dummy_section_1 = Section.find_by book_id: dummy_book_1.id, identifier: '1'
+dummy_line_1 = Line.find_by section_id: dummy_section_1.id, line_number: '3'
+annotation_1 = Annotation.create(
+  :line_id => dummy_line_1.id,
+  :section_id => dummy_section_1.id,
+  :content => "When you see an infinitive in indirect speech but don't yet know what is introducing the infinitive, try just translating it as if it were an indicative verb until you know more.",
+  :user_id => dummy_user.id,
+  :lemma => "risisse",
+  :start_index => 4
+)
+
+dummy_book_2 = Book.find_by text_id: ovid_amores.id, book_number: '1'
+dummy_section_2 = Section.find_by book_id: dummy_book_1.id, identifier: '1'
+dummy_line_2 = Line.find_by section_id: dummy_section_1.id, line_number: '3'
+annotation_2 = Annotation.create(
+  :line_id => dummy_line_2.id,
+  :section_id => dummy_section_2.id,
+  :content => "Despite the general rule that the subject of verbs in indirect speech are rendered in the accusative case, because of the specific verb used to introduce this indirect expression, the indirect subject here will be in the nominative.",
+  :user_id => dummy_user.id,
+  :lemma => "Cupido",
+  :start_index => 5
+)

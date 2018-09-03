@@ -1,3 +1,4 @@
 class Annotation < ApplicationRecord
-  belongs_to :annotation_group
+  belongs_to :line
+  belongs_to :section
 end
