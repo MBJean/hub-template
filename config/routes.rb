@@ -1,7 +1,14 @@
 Rails.application.routes.draw do
+
+  # devise stuff
   devise_for :users
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "dashboard#index"
+
+  #user routes
+  get "users/profile" => "user#show", as: :user_profile
+
   # routing for author and texts
   get "authors" => "authors#index", as: :author_path
   get "authors/:short_name" => "authors#by_short_name"
@@ -10,7 +17,13 @@ Rails.application.routes.draw do
   get "authors/:short_name/:text/:book_number/:section_identifier" => "authors#by_section"
   get "authors/:short_name/:text/:book_number/:section/:line_number" => "authors#by_line"
 
-  get "users/profile" => "user#show", as: :user_profile
-  post '/dictionary', to: 'dictionary#search', as: 'dictionary'
+  # API routes
+  namespace :api do
+    namespace :v1 do
+    	post '/dictionary', to: 'dictionary#search', as: 'dictionary'
+      resources :annotation, except: [:index]
+      resources :section, except: [:index]
+    end
+  end
 
 end

@@ -1,6 +1,6 @@
 require 'json'
 
-class DictionaryController < ApplicationController
+class Api::V1::DictionaryController < Api::V1::BaseController
   skip_before_action :authenticate_user!, only: [:search]
   def search
     @search_input = params[:input]
