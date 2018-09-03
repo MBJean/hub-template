@@ -1,4 +1,4 @@
 class Institution < ApplicationRecord
-  has_many :groups
-  has_many :users, through: :groups
+  has_many :classrooms
+  has_many :users, through: :classrooms
 end

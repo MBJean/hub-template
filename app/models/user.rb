@@ -10,5 +10,5 @@ class User < ApplicationRecord
   has_many :vocabulary_books
   has_many :words, through: :vocabulary_books
   has_many :annotations
-  has_and_belongs_to_many :groups
+  has_and_belongs_to_many :classrooms
 end

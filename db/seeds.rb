@@ -9,9 +9,9 @@
 require "csv"
 
 DATA_DICTIONARY = "#{Rails.root}/lib/data/lat-dict-base.xml"
-doc_dict = File.open(DATA_DICTIONARY) { |f| Nokogiri::XML(f) }
-entries_dict = doc_dict.xpath("//entryFree")
-entries_dict.each do |entry|
+DOC_DICT = File.open(DATA_DICTIONARY) { |f| Nokogiri::XML(f) }
+ENTRIES_DICT = DOC_DICT.xpath("//entryFree")
+ENTRIES_DICT.each do |entry|
   Dictionary.create(
     #:key => entry['key'].downcase.gsub(/[^a-zA-Z]/, ""),
     #:key => entry['key'].downcase,
@@ -20,3 +20,23 @@ entries_dict.each do |entry|
     :description => entry
   )
 end
+
+# Ovid's works as a test case for how to enter Latin texts into the DB
+ovid = Author.create( :name => 'Publius Ovidius Naso', :short_name => 'Ovid' )
+Text.create( :author_id => ovid.id, :title => 'Amores', :genre => 'Elegy', :style => 'poetry' )
+Text.create( :author_id => ovid.id, :title => 'Ars Amatoria', :genre => 'Elegy', :style => 'poetry' )
+Text.create( :author_id => ovid.id, :title => 'Ex Ponto', :genre => 'Elegy', :style => 'poetry' )
+Text.create( :author_id => ovid.id, :title => 'Tristia', :genre => 'Elegy', :style => 'poetry' )
+Text.create( :author_id => ovid.id, :title => 'Fasti', :genre => 'Elegy', :style => 'poetry' )
+Text.create( :author_id => ovid.id, :title => 'Ibis', :genre => 'Elegy', :style => 'poetry' )
+Text.create( :author_id => ovid.id, :title => 'Metamorphoses', :genre => 'Epic', :style => 'poetry' )
+
+# Ovid's Amores
+# DATA_AMORES = "#{Rails.root}/lib/data/texts/ovid/amores/text.xml"
+# DOC_AMORES = File.open(DATA_AMORES) { |f| Nokogiri::XML(f) }
+# ENTRIES_AMORES = DOC_AMORES.xpath("//div1")
+# ENTRIES_AMORES.each do |book|
+#   Book.create(
+#
+#   )
+# end
