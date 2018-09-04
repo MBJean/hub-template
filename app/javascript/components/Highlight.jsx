@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import buildAnnotationObject from '../helpers/buildAnnotationObject';
-import Line from './Highlight/Line';
-import Entry from './Highlight/Entry';
+import Annotation from './Highlight/Annotation';
 
 export default class Highlight extends Component {
 
@@ -21,8 +20,8 @@ export default class Highlight extends Component {
     this.fetchSection();
   }
 
-  errorHandler = () => {
-
+  errorHandler = (json) => {
+    console.log(json);
   }
 
   fetchSection = () => {
@@ -93,7 +92,7 @@ export default class Highlight extends Component {
         referrer: 'no-referrer',
       })
       .then(
-        response => response.json().then( json => json.response === "success" ? this.reset(): this.errorHandler() ),
+        response => response.json().then( json => json.response === "success" ? this.reset(): this.errorHandler(json) ),
         error => error
       )
     }
@@ -180,13 +179,7 @@ export default class Highlight extends Component {
         {
           this.state.annotations_active ?
             this.state.annotations.map( annotation => (
-              <div className="Highlight__entry" key={`annotations-${annotation.id}-${annotation.start_index}`}>
-                <p><b>{annotation.lemma}</b></p>
-                <div className="Highlight__text">
-                  <p>{ annotation.content }</p>
-                  <p>{ annotation.user_id }</p>
-                </div>
-              </div>
+              <Annotation annotation={annotation} key={`annotations-${annotation.id}-${annotation.start_index}`}/>
             )):
             null
         }

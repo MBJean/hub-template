@@ -75,6 +75,7 @@
 
 .Highlight__annotations .Highlight__entry {
   padding: 1em;
+  position: relative;
 }
 
 .Highlight__annotations .Highlight__entry .Highlight__text {
@@ -83,6 +84,14 @@
 
 .Highlight__annotations .Highlight__entry:nth-child(even) {
   background-color: #EFEFEF;
+}
+
+.Highlight__annotations .Highlight__entry .Highlight__content {
+
+}
+
+.Highlight__annotations .Highlight__entry .Highlight__attribution {
+  text-align: right;
 }
 
 .Highlight__highlight {
@@ -119,6 +128,19 @@
 .Highlight__list {
   list-style: none;
   padding: 0;
+}
+
+.Highlight__buttons {
+  bottom: 0;
+  display: flex;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.Highlight__buttons .Highlight__button {
+  flex-basis: 0;
+  flex-grow: 1;
 }
 
 @keyframes highlight_bubble_in {

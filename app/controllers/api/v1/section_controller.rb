@@ -1,4 +1,5 @@
 class Api::V1::SectionController < Api::V1::BaseController
+  skip_before_action :authenticate_user!, only: :show
 
   # POST /section
   def create
@@ -26,9 +27,6 @@ class Api::V1::SectionController < Api::V1::BaseController
 
   private
 
-  def todo_params
-    # whitelist params
-    params.permit()
-  end
+    # TODO: add whitelist params
 
 end
