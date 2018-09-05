@@ -11,7 +11,8 @@ export default class Highlight extends Component {
     current_highlight_editing: {},
     data: {
       lines: [],
-      annotations: []
+      annotations: [],
+      current_user: ''
     },
     editing_active: false
   }
@@ -34,6 +35,16 @@ export default class Highlight extends Component {
         }),
         error => error
       );
+  }
+
+  onClickDeleteAnnotation = (annotation_id) => {
+    fetch(`/api/v1/annotation/${annotation_id}`, {
+      method: 'DELETE'
+    })
+    .then(
+      response => response.status === 204 ? this.reset(): this.errorHandler({ type: 'delete', status: response.status}),
+      error => error
+    )
   }
 
   onClickHighlight = (annotations_array) => {
@@ -100,7 +111,12 @@ export default class Highlight extends Component {
   }
 
   reset = () => {
-    this.fetchSection();
+    this.setState({
+      annotations_active: false,
+      annotations: [],
+      current_highlight_editing: {},
+      editing_active: false
+    }, () => this.fetchSection());
   }
 
   render() {
@@ -138,7 +154,7 @@ export default class Highlight extends Component {
               i += lemma.split('\n').length - 2;
               skip_lines = true;
               j = line_by_word.length;
-              counter_j = lemma.split('\n')[lemma.split('\n').length - 1].split(' ').length - 1;
+              counter_j = lemma.split('\n')[lemma.split('\n').length - 1].split(' ').length;
               output_arr.push(' ');
             } else {
               j = j + lemma.split('\n')[lemma.split('\n').length - 1].split(' ').length - 1;
@@ -179,7 +195,12 @@ export default class Highlight extends Component {
         {
           this.state.annotations_active ?
             this.state.annotations.map( annotation => (
-              <Annotation annotation={annotation} key={`annotations-${annotation.id}-${annotation.start_index}`}/>
+              <Annotation
+                annotation={annotation}
+                onClickDeleteAnnotation={this.onClickDeleteAnnotation}
+                section={this.state.data}
+                key={`annotations-${annotation.id}-${annotation.start_index}`}
+                />
             )):
             null
         }

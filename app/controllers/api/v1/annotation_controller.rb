@@ -31,9 +31,7 @@ class Api::V1::AnnotationController < Api::V1::BaseController
     annotation = Annotation.find(params[:id])
     if annotation.user_id == current_user.id
       annotation.destroy
-      render json: { :response => 'succcess' }
-    else
-      render json: { :response => 'failure', :error => 'Not current user' }
+      render json: {}, status: :no_content
     end
   end
 

@@ -11,7 +11,8 @@ class Api::V1::SectionController < Api::V1::BaseController
     section = Section.find(params[:id])
     render json: {
       :lines => section.lines,
-      :annotations => section.annotations
+      :annotations => section.annotations,
+      :current_user => current_user.id
     }
   end
 
