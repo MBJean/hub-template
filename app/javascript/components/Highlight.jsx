@@ -8,13 +8,23 @@ export default class Highlight extends Component {
   state = {
     annotations_active: false,
     annotations: [],
-    current_highlight_editing: {},
+    current_editing: {},
     data: {
       lines: [],
       annotations: [],
       current_user: ''
     },
-    editing_active: false
+    editing_additional_active: {
+      annotation: {},
+      id: '',
+      is_active: false
+    },
+    editing_new_active: false,
+    editing_old_active: {
+      content: '',
+      id: '',
+      is_active: false
+    }
   }
 
   componentDidMount = () => {
@@ -37,6 +47,32 @@ export default class Highlight extends Component {
       );
   }
 
+  onChangeAnnotation = (ev) => {
+    let temp_obj = {...this.state.current_editing};
+    temp_obj.content = ev.target.value;
+    this.setState({
+      current_editing: temp_obj
+    });
+  }
+
+  onChangeEditedAnnotation = (ev) => {
+    let temp_obj = {...this.state.editing_old_active};
+    temp_obj.content = ev.target.value;
+    this.setState({
+      editing_old_active: temp_obj
+    });
+  }
+
+  onClickAddAnnotation = (annotation) => {
+    this.setState({
+      editing_additional_active: {
+        annotation: annotation,
+        id: annotation.id,
+        is_active: !this.state.editing_additional_active.is_active
+      }
+    });
+  }
+
   onClickDeleteAnnotation = (annotation_id) => {
     fetch(`/api/v1/annotation/${annotation_id}`, {
       method: 'DELETE'
@@ -45,6 +81,16 @@ export default class Highlight extends Component {
       response => response.status === 204 ? this.reset(): this.errorHandler({ type: 'delete', status: response.status}),
       error => error
     )
+  }
+
+  onClickEditAnnotation = (annotation) => {
+    this.setState({
+      editing_old_active: {
+        content: annotation.content,
+        id: annotation.id,
+        is_active: !this.state.editing_old_active.is_active
+      }
+    });
   }
 
   onClickHighlight = (annotations_array) => {
@@ -56,16 +102,8 @@ export default class Highlight extends Component {
     this.setState({
       annotations_active: temp_arr.length > 0,
       annotations: temp_arr,
-      current_highlight_editing: {},
-      editing_active: false
-    });
-  }
-
-  onChangeAnnotation = (ev) => {
-    let temp_obj = {...this.state.current_highlight_editing};
-    temp_obj.content = ev.target.value;
-    this.setState({
-      current_highlight_editing: temp_obj
+      current_editing: {},
+      editing_new_active: false
     });
   }
 
@@ -80,17 +118,75 @@ export default class Highlight extends Component {
       this.setState({
         annotations_active: false,
         annotations: [],
-        current_highlight_editing: annotation_object.response,
-        editing_active: true
+        current_editing: annotation_object.response,
+        editing_new_active: true
       });
     }
   }
 
+  onSubmitAdditionalAnnotation = (ev) => {
+    ev.preventDefault();
+    if (this.state.current_editing.content.length > 0) {
+      let payload = {
+        author_id: this.props.options.author_id,
+        text_id: this.props.options.text_id,
+        book_id: this.props.options.book_id,
+        section_id: this.props.options.section_id,
+        line_id: this.state.editing_additional_active.annotation.line_id,
+        start_index: this.state.editing_additional_active.annotation.start_index,
+        lemma: this.state.editing_additional_active.annotation.lemma,
+        content: this.state.current_editing.content
+      }
+      fetch(`/api/v1/annotation`, {
+        body: JSON.stringify({"payload": payload}),
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+          'user-agent': 'Mozilla/4.0 MDN Example',
+          'content-type': 'application/json'
+        },
+        method: 'POST',
+        mode: 'cors',
+        redirect: 'follow',
+        referrer: 'no-referrer',
+      })
+      .then(
+        response => response.json().then( json => json.response === "success" ? this.reset(): this.errorHandler(json) ),
+        error => error
+      )
+    }
+    // TODO: add error handling here
+  }
+
+  onSubmitEditedAnnotation = (ev) => {
+    ev.preventDefault();
+    if (this.state.editing_old_active.content.length > 0) {
+      fetch(`/api/v1/annotation/${this.state.editing_old_active.id}`, {
+        body: JSON.stringify({"payload": this.state.editing_old_active}),
+        cache: 'no-cache',
+        credentials: 'include',
+        headers: {
+          'user-agent': 'Mozilla/4.0 MDN Example',
+          'content-type': 'application/json'
+        },
+        method: 'PUT',
+        mode: 'cors',
+        redirect: 'follow',
+        referrer: 'no-referrer',
+      })
+      .then(
+        response => response.json().then( json => json.response === "success" ? this.reset(): this.errorHandler(json) ),
+        error => error
+      )
+    }
+    // add error handling
+  }
+
   onSubmitNewAnnotation = (ev) => {
     ev.preventDefault();
-    if (this.state.current_highlight_editing.content.length > 0) {
+    if (this.state.current_editing.content.length > 0) {
       fetch(`/api/v1/annotation`, {
-        body: JSON.stringify({"payload": this.state.current_highlight_editing}),
+        body: JSON.stringify({"payload": this.state.current_editing}),
         cache: 'no-cache',
         credentials: 'include',
         headers: {
@@ -114,8 +210,18 @@ export default class Highlight extends Component {
     this.setState({
       annotations_active: false,
       annotations: [],
-      current_highlight_editing: {},
-      editing_active: false
+      current_editing: {},
+      editing_additional_active: {
+        content: '',
+        id: '',
+        is_active: false
+      },
+      editing_new_active: false,
+      editing_old_active: {
+        content: '',
+        id: '',
+        is_active: false
+      }
     }, () => this.fetchSection());
   }
 
@@ -191,13 +297,23 @@ export default class Highlight extends Component {
         <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
           { output_arr }
         </div>
-        <div className={`Highlight__annotations ${this.state.annotations_active || this.state.editing_active ? 'Highlight__annotations--active': 'Highlight__annotations--inactive' }`}>
+        <div className={`Highlight__annotations ${this.state.annotations_active || this.state.editing_new_active ? 'Highlight__annotations--active': 'Highlight__annotations--inactive' }`}>
         {
           this.state.annotations_active ?
             this.state.annotations.map( annotation => (
               <Annotation
                 annotation={annotation}
+                current_editing={this.state.current_editing}
+                editing_additional_active={this.state.editing_additional_active}
+                editing_old_active={this.state.editing_old_active}
+                onChangeAnnotation={this.onChangeAnnotation}
+                onChangeEditedAnnotation={this.onChangeEditedAnnotation}
+                onClickAddAnnotation={this.onClickAddAnnotation}
                 onClickDeleteAnnotation={this.onClickDeleteAnnotation}
+                onClickEditAnnotation={this.onClickEditAnnotation}
+                onSubmitAdditionalAnnotation={this.onSubmitAdditionalAnnotation}
+                onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
+                onSubmitNewAnnotation={this.onSubmitNewAnnotation}
                 section={this.state.data}
                 key={`annotations-${annotation.id}-${annotation.start_index}`}
                 />
@@ -205,15 +321,15 @@ export default class Highlight extends Component {
             null
         }
         {
-          this.state.editing_active ?
+          this.state.editing_new_active ?
             <div className="Highlight__editing">
               <p><b>Add new annotation</b></p>
               <ul className="Highlight__list">
-                <li>Lines(s): {`${ this.state.current_highlight_editing.line}`}</li>
-                <li>Lemma: <i>{`${this.state.current_highlight_editing.lemma}`}</i></li>
+                <li>Lines(s): {`${ this.state.current_editing.line}`}</li>
+                <li>Lemma: <i>{`${this.state.current_editing.lemma}`}</i></li>
               </ul>
               <form onSubmit={this.onSubmitNewAnnotation}>
-                <textarea className="Highlight__textarea" maxLength="1000" onChange={this.onChangeAnnotation} placeholder="Enter new annotation here"></textarea>
+                <textarea className="Highlight__textarea" maxLength="1000" onChange={this.onChangeAnnotation} placeholder="Enter new annotation here" value={this.state.current_editing.content}></textarea>
                 <input type="submit" value="Submit"/>
               </form>
             </div>:
