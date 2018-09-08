@@ -57,7 +57,7 @@ class Highlight extends Component {
                 className={ `Highlight__highlight Highlight__highlight--${ page_data.annotations.active_annotations.find( obj => obj.id === annotations_by_word.id && obj.start === annotations_by_word.start ) !== undefined ? 'active': 'inactive'}` }
                 key={`highlight-${annotations_by_line[0].line_id}-${annotations_by_word[0].start_index}`}
                 onClick={ () => {this.onClickAnnotation(annotations_by_word)} }
-                onMouseUp={ () => this.onMouseUpText(this.props.options) }>
+                onMouseUp={ () => this.onMouseUpText(this.props.options, page_data.section.current_user) }>
                 {lemma} </mark>
             ));
             // move line counter up equal to number of 'lines' in the lemmata
@@ -79,7 +79,7 @@ class Highlight extends Component {
                 data-lid={line.id}
                 data-word={j}
                 key={`word-${line.line_number}-${j}`}
-                onMouseUp={ () => this.onMouseUpText(this.props.options) }>
+                onMouseUp={ () => this.onMouseUpText(this.props.options, page_data.section.current_user) }>
                 {word} </span>
             ));
           }
@@ -91,7 +91,7 @@ class Highlight extends Component {
               data-lid={line.id}
               data-word={j}
               key={`word-${line.line_number}-${j}`}
-              onMouseUp={ () => this.onMouseUpText(this.props.options) }>
+              onMouseUp={ () => this.onMouseUpText(this.props.options, page_data.section.current_user) }>
               {word} </span>
           ));
         }

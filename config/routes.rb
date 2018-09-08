@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     namespace :v1 do
     	post '/dictionary', to: 'dictionary#search', as: 'dictionary'
       resources :annotation, except: [:index]
-      resources :section, except: [:index]
+      get 'section/:id/' => 'section#show'
     end
   end
 

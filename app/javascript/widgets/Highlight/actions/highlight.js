@@ -1,5 +1,6 @@
 import * as HighlightActionTypes from '../actiontypes/highlight';
 import buildAnnotationObject from '../../../helpers/buildAnnotationObject';
+import getCSRFToken from '../../../helpers/getCSRFToken';
 
 export const onClickAnnotation = (annotations) => {
   return function (dispatch) {
@@ -19,7 +20,12 @@ export const onClickAdd = () => {
 export const onClickDelete = (annotation_id) => {
   return function (dispatch) {
     fetch(`/api/v1/annotation/${annotation_id}`, {
-      method: 'DELETE'
+      method: 'DELETE',
+      headers: {
+        'user-agent': 'Mozilla/4.0 MDN Example',
+        'content-type': 'application/json',
+        'X-CSRF-Token': getCSRFToken()
+      },
     })
     .then(
       response => response.status === 204 ? dispatch(resetState()): dispatch(errorHandler("on click delete")),
@@ -71,14 +77,16 @@ export const onChangeEditedAnnotation = (index, value) => {
   };
 }
 
-export const onMouseUpText = (options) => {
+export const onMouseUpText = (options, current_user_id) => {
   return function (dispatch) {
-    let annotation_object = buildAnnotationObject(options);
-    if (annotation_object.error === null) {
-      dispatch({
-        type: HighlightActionTypes.ACTIVATE_NEW_ANNOTATION,
-        new_annotation: annotation_object.response
-      });
+    if (current_user_id !== "guest") {
+      let annotation_object = buildAnnotationObject(options);
+      if (annotation_object.error === null) {
+        dispatch({
+          type: HighlightActionTypes.ACTIVATE_NEW_ANNOTATION,
+          new_annotation: annotation_object.response
+        });
+      }
     }
   };
 }
@@ -104,7 +112,8 @@ export const onSubmitEditedAnnotation = (ev, id, value) => {
         credentials: 'include',
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'X-CSRF-Token': getCSRFToken()
         },
         method: 'PUT',
         mode: 'cors',
@@ -133,7 +142,8 @@ export const onSubmitNewAnnotation = (ev, options) => {
         credentials: 'include',
         headers: {
           'user-agent': 'Mozilla/4.0 MDN Example',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'X-CSRF-Token': getCSRFToken()
         },
         method: 'POST',
         mode: 'cors',
