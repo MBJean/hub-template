@@ -24,7 +24,7 @@ class Api::V1::AnnotationController < Api::V1::BaseController
   # PUT /annotation/:id
   def update
     annotation = Annotation.find(params[:id])
-    if annotation.update(content: params[:payload][:content])
+    if annotation.update(content: params[:payload][:value])
       render json: { :response => 'success' }
     else
       render json: { :response => 'failure' }

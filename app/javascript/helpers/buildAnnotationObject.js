@@ -74,8 +74,7 @@ const buildAnnotationObject = (options) => {
         line_id: coordinates.start.line_id,
         line: coordinates.start.line,
         start_index: coordinates.start.word,
-        lemma: lemma_arr.join('\n'),
-        content: ""
+        lemma: lemma_arr.join('\n')
       }
     };
   }

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import convertEntities from '../helpers/convertEntities';
-import createPostBody from '../helpers/createPostBody';
-import renderUnsafeXml from '../helpers/renderUnsafeXml';
-import fetchArray from '../helpers/fetchArray';
-import parseXml from '../helpers/parseXml';
+import convertEntities from '../../helpers/convertEntities';
+import createPostBody from '../../helpers/createPostBody';
+import renderUnsafeXml from '../../helpers/renderUnsafeXml';
+import fetchArray from '../../helpers/fetchArray';
+import parseXml from '../../helpers/parseXml';
 
 export default class Dictionary extends Component {
 

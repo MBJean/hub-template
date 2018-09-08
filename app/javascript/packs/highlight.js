@@ -5,8 +5,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import Highlight from '../components/Highlight';
-import test_json from '../../../lib/data/test_json.json';
+import Highlight from '../widgets/Highlight/containers/Highlight';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import HighlightReducer from '../widgets/Highlight/reducers/highlight';
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!!document.getElementById("Highlight")) {
@@ -14,16 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let text_id = document.getElementById("Highlight").dataset.text;
     let book_id = document.getElementById("Highlight").dataset.book;
     let section_id = document.getElementById("Highlight").dataset.section;
+    const STORE = createStore(
+      HighlightReducer,
+      applyMiddleware(thunkMiddleware)
+    );
     ReactDOM.render(
-      <Highlight
-        options={
-          {
-            author_id: author_id,
-            text_id: text_id,
-            book_id: book_id,
-            section_id: section_id
+      <Provider store={STORE}>
+        <Highlight
+          options={
+            {
+              author_id: author_id,
+              text_id: text_id,
+              book_id: book_id,
+              section_id: section_id
+            }
           }
-        }
-      />, document.getElementById('Highlight'));
+        />
+      </Provider>,
+      document.getElementById('Highlight'));
   }
 })

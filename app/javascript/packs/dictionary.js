@@ -5,7 +5,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import Dictionary from '../components/Dictionary';
+import Dictionary from '../widgets/Dictionary/Dictionary';
 
 document.addEventListener('DOMContentLoaded', () => {
   !!document.getElementById("Dictionary") && ReactDOM.render(<Dictionary />, document.getElementById('Dictionary'));
