@@ -171,7 +171,11 @@ class Highlight extends Component {
               </form>
             </div>:
             <div className="Highlight__buttons">
-              <button className="Highlight__button Highlight__add" onClick={this.onClickAdd}>Add Annotation</button>
+              {
+                page_data.section.current_user === "guest" ?
+                  <button className="Highlight__button Highlight__add" disabled>Sign up to add annotations</button>:
+                  <button className="Highlight__button Highlight__add" onClick={this.onClickAdd}>Add Annotation</button>
+              }
             </div>
         }
         </div>

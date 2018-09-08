@@ -24,12 +24,6 @@ require "csv"
 # Ovid's works as a test case for how to enter Latin texts into the DB
 ovid = Author.create( :name => 'Publius Ovidius Naso', :short_name => 'Ovid' )
 ovid_amores = Text.create( :author_id => ovid.id, :title => 'Amores', :genre => 'Elegy', :style => 'poetry' )
-ovid_ars_amatoria = Text.create( :author_id => ovid.id, :title => 'Ars Amatoria', :genre => 'Elegy', :style => 'poetry' )
-ovid_ex_ponto = Text.create( :author_id => ovid.id, :title => 'Ex Ponto', :genre => 'Elegy', :style => 'poetry' )
-ovid_tristia = Text.create( :author_id => ovid.id, :title => 'Tristia', :genre => 'Elegy', :style => 'poetry' )
-ovid_fasti = Text.create( :author_id => ovid.id, :title => 'Fasti', :genre => 'Elegy', :style => 'poetry' )
-ovid_ibis = Text.create( :author_id => ovid.id, :title => 'Ibis', :genre => 'Elegy', :style => 'poetry' )
-ovid_metamorphoses = Text.create( :author_id => ovid.id, :title => 'Metamorphoses', :genre => 'Epic', :style => 'poetry' )
 
 # Ovid's Amores
 DATA_AMORES = "#{Rails.root}/lib/data/texts/ovid/amores/text.xml"
