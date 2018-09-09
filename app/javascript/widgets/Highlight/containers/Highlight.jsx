@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as HighlightActionCreators from '../actions/highlight';
-import Annotation from '../components/Annotation';
+import Annotations from '../components/Annotations';
 
 class Highlight extends Component {
 
@@ -30,7 +30,6 @@ class Highlight extends Component {
   componentDidMount = () => {
     this.setSection(`${this.props.options.section_id}`);
   }
-
   buildSection = (page_data) => {
     let output_arr = [];
     let counter_j = 0;
@@ -112,73 +111,19 @@ class Highlight extends Component {
         <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
           { this.buildSection(page_data) }
         </div>
-        <div className={`Highlight__annotations ${page_data.annotations.is_active ? 'Highlight__annotations--active': 'Highlight__annotations--inactive' }`}>
         {
-          page_data.annotations.active_annotations.length > 0 ?
-            <div className="Highlight__header">
-              <p><i>{page_data.annotations.active_annotations[0].lemma}</i></p>
-            </div>:
-            null
-        }
-        {
-          page_data.annotations.active_type === "add" ?
-            <div className="Highlight__add">
-              <p><b>Add new annotation</b></p>
-              <form onSubmit={ (ev) => this.onSubmitNewAnnotation(ev, { annotation: page_data.annotations.active_annotations[0], value: page_data.annotations.active_value }) }>
-                <textarea
-                  className="Highlight__textarea"
-                  maxLength="1000"
-                  onChange={ (ev) => this.onChangeActiveAnnotation(ev.target.value) }
-                  placeholder="Enter additional annotation here"
-                  value={page_data.annotations.active_value}>
-                </textarea>
-                <input type="submit" value="Submit"/>
-              </form>
-            </div>:
-            null
-        }
-        {
-          page_data.annotations.active_annotations.map( annotation => (
-            <Annotation
-              annotation={annotation}
-              annotation_data={page_data.annotations}
+          page_data.annotations.is_active ?
+            <Annotations
+              page_data={page_data}
               onChangeActiveAnnotation={this.onChangeActiveAnnotation}
+              onClickAdd={this.onClickAdd}
               onClickDelete={this.onClickDelete}
               onClickEdit={this.onClickEdit}
               onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
-              section_data={page_data.section}
-              key={`annotations-${annotation.id}-${annotation.start_index}`}
-              />
-          ))
+              onSubmitNewAnnotation={this.onSubmitNewAnnotation}
+            />:
+            null
         }
-        {
-          page_data.annotations.active_type === "new" ?
-            <div className="Highlight__editing">
-              <p><b>Add new annotation</b></p>
-              <ul className="Highlight__list">
-                <li>Lines(s): {`${page_data.annotations.active_annotation.line}`}</li>
-                <li>Lemma: <i>{`${page_data.annotations.active_annotation.lemma}`}</i></li>
-              </ul>
-              <form onSubmit={ (ev) => this.onSubmitNewAnnotation(ev, { annotation: page_data.annotations.active_annotation, value: page_data.annotations.active_value }) }>
-                <textarea
-                  className="Highlight__textarea"
-                  maxLength="1000"
-                  onChange={ (ev) => this.onChangeActiveAnnotation(ev.target.value) }
-                  placeholder="Enter new annotation here"
-                  value={page_data.annotations.active_value}>
-                </textarea>
-                <input type="submit" value="Submit"/>
-              </form>
-            </div>:
-            <div className="Highlight__buttons">
-              {
-                page_data.section.current_user === "guest" ?
-                  <button className="Highlight__button Highlight__add" disabled>Sign up to add annotations</button>:
-                  <button className="Highlight__button Highlight__add" onClick={this.onClickAdd}>Add Annotation</button>
-              }
-            </div>
-        }
-        </div>
       </div>
     )
   }
