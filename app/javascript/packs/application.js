@@ -21,9 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('turbolinks:load', () => {
     if (!!document.getElementById("Dictionary")) {
       ReactDOM.render(<Dictionary />, document.getElementById('Dictionary'));
-      document.addEventListener('turbolinks:before-cache', function () {
-        ReactDOM.unmountComponentAtNode(document.getElementById("Dictionary"))
-      });
     }
   })
 
@@ -51,9 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
           />
         </Provider>,
         document.getElementById('Highlight'));
-      document.addEventListener('turbolinks:before-cache', function () {
-        ReactDOM.unmountComponentAtNode(document.getElementById("Highlight"))
-      });
     }
   });
 });

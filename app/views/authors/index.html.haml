@@ -1,5 +1,7 @@
-.c
-  %h1 Authors
-  %ul
-    - @authors.each do |author|
-      %li= link_to author.name, "/authors/#{author.short_name.downcase.gsub(' ', '-')}"
+.mdc-layout-grid
+  .mdc-layout-grid__inner
+    .mdc-layout-grid__cell--span-12
+      %h1 Authors
+      %ul
+        - @authors.each do |author|
+          %li= link_to author.name, "/authors/#{author.short_name.downcase.gsub(' ', '-')}"

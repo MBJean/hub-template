@@ -143,6 +143,15 @@
   flex-grow: 1;
 }
 
+.Highlight__list {
+  list-style: none;
+  padding: 0;
+}
+
+.Highlight__lemma {
+  white-space: pre-line;
+}
+
 @keyframes highlight_bubble_in {
   from { opacity: 0; transform: translate(90%, -50%); }
   to { opacity: 1; transform: translate(100%, -50%); }

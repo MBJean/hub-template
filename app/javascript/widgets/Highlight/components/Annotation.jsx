@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 const Annotation = props => {
-    return (
-    <div className="Highlight__entry">
+  return (
+    <li className="Highlight__entry">
       <div className="Highlight__text">
         {
           props.annotation_data.active_type === "edit" && props.annotation_data.active_annotation.id == props.annotation.id ?
@@ -28,7 +28,7 @@ const Annotation = props => {
           </div>:
           null
       }
-    </div>
+    </li>
   )
 }
 
@@ -37,6 +37,7 @@ Annotation.propTypes = {
   annotation_data: PropTypes.object.isRequired,
   onChangeActiveAnnotation: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
+  onClickEdit: PropTypes.func.isRequired,
   onSubmitEditedAnnotation: PropTypes.func.isRequired,
   section_data: PropTypes.object.isRequired
 };

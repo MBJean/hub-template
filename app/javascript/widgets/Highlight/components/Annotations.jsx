@@ -5,13 +5,13 @@ import Annotation from './Annotation';
 const Annotations = props => {
   return (
     <div className="Highlight__annotations">
-    {
-      props.page_data.annotations.active_annotations.length > 0 ?
-        <div className="Highlight__header">
-          <p><i>{props.page_data.annotations.active_annotations[0].lemma}</i></p>
-        </div>:
-        null
-    }
+      <div className="Highlight__header">
+        {
+          props.page_data.annotations.active_annotations.length > 0 ?
+            <p><i className="Highlight__lemma">{props.page_data.annotations.active_annotations[0].lemma}</i></p>:
+            null
+        }
+      </div>
     {
       props.page_data.annotations.active_type === "add" ?
         <div className="Highlight__add">
@@ -29,20 +29,22 @@ const Annotations = props => {
         </div>:
         null
     }
-    {
-      props.page_data.annotations.active_annotations.map( annotation => (
-        <Annotation
-          annotation={annotation}
-          annotation_data={props.page_data.annotations}
-          onChangeActiveAnnotation={props.onChangeActiveAnnotation}
-          onClickDelete={props.onClickDelete}
-          onClickEdit={this.onClickEdit}
-          onSubmitEditedAnnotation={props.onSubmitEditedAnnotation}
-          section_data={props.page_data.section}
-          key={`annotations-${annotation.id}-${annotation.start_index}`}
-          />
-      ))
-    }
+    <ul className="Highlight__list">
+      {
+        props.page_data.annotations.active_annotations.map( annotation => (
+          <Annotation
+            annotation={annotation}
+            annotation_data={props.page_data.annotations}
+            onChangeActiveAnnotation={props.onChangeActiveAnnotation}
+            onClickDelete={props.onClickDelete}
+            onClickEdit={props.onClickEdit}
+            onSubmitEditedAnnotation={props.onSubmitEditedAnnotation}
+            section_data={props.page_data.section}
+            key={`annotations-${annotation.id}-${annotation.start_index}`}
+            />
+        ))
+      }
+    </ul>
     {
       props.page_data.annotations.active_type === "new" ?
         <div className="Highlight__editing">
@@ -65,9 +67,11 @@ const Annotations = props => {
         null
     }
     {
-      props.page_data.section.current_user === "guest" ?
-        <div className="Highlight__buttons"><button className="Highlight__button Highlight__add" disabled>Sign up to add annotations</button></div>:
-        <div className="Highlight__buttons"><button className="Highlight__button Highlight__add" onClick={props.onClickAdd}>Add Annotation</button></div>
+      props.page_data.annotations.active_type === "new" ?
+        null:
+        props.page_data.section.current_user === "guest" ?
+          <div className="Highlight__buttons"><button className="Highlight__button Highlight__add" disabled>Sign up to add annotations</button></div>:
+          <div className="Highlight__buttons"><button className="Highlight__button Highlight__add" onClick={props.onClickAdd}>Add Annotation</button></div>
     }
     </div>
   )
@@ -78,6 +82,7 @@ Annotations.propTypes = {
   onChangeActiveAnnotation: PropTypes.func.isRequired,
   onClickAdd: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
+  onClickEdit: PropTypes.func.isRequired,
   onSubmitEditedAnnotation: PropTypes.func.isRequired,
   onSubmitNewAnnotation: PropTypes.func.isRequired,
 };
