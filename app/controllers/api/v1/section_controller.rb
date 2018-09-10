@@ -7,6 +7,7 @@ class Api::V1::SectionController < Api::V1::BaseController
     render json: {
       :lines => section.lines,
       :annotations => section.annotations,
+      :identifier => section.identifier,
       :current_user => current_user ? current_user.id: 'guest'
     }
   end

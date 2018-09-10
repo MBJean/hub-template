@@ -9,91 +9,6 @@
   position: relative;
 }
 
-/*
-.Highlight__comment,
-.Highlight__translation {
-  top: 50%; right: 0;
-  max-width: 300px;
-  animation: highlight_bubble_in 0.3s ease;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  font-size: 1rem;
-  padding: 2em 2.5em;
-  position: absolute;
-  transform: translate(100%, -50%);
-  transition: all 0.3s ease;
-}
-
-.Highlight__comment {
-  background-color: #FFE7DC;
-}
-
-.Highlight__translation {
-  background-color: #E0FFE7;
-}
-
-.Highlight__comment::before,
-.Highlight__translation::before {
-  width: 0; height: 0;
-  top: 50%;
-	border-top: 1em solid transparent;
-	border-bottom: 1em solid transparent;
-  content: '';
-  position: absolute;
-  transform: translate(-4.5em, -50%);
-}
-
-.Highlight__comment::before {
-  border-right: 2em solid #FFE7DC;
-}
-
-.Highlight__translation::before {
-  border-right: 2em solid #E0FFE7;
-}
-
-.Highlight__comment--inactive,
-.Highlight__translation--inactive {
-  opacity: 1;
-  z-index: 1;
-}
-
-.Highlight__comment--inactive,
-.Highlight__translation--inactive {
-  opacity: 0;
-  z-index: -1;
-}
-*/
-
-.Highlight__annotations {
-  background-color: white;
-  width: 40vw; height: 100vh;
-  top: 0; right: 0;
-  border-left: 1px solid black;
-  overflow-y: scroll;
-  padding: 100px 0;
-  position: fixed;
-}
-
-.Highlight__annotations .Highlight__entry {
-  padding: 1em;
-  position: relative;
-}
-
-.Highlight__annotations .Highlight__entry .Highlight__text {
-  font-size: 1rem;
-}
-
-.Highlight__annotations .Highlight__entry:nth-child(even) {
-  background-color: #EFEFEF;
-}
-
-.Highlight__annotations .Highlight__entry .Highlight__content {
-
-}
-
-.Highlight__annotations .Highlight__entry .Highlight__attribution {
-  text-align: right;
-}
-
 .Highlight__highlight {
   cursor: pointer;
   background-color: #E0FFE7;
@@ -102,7 +17,7 @@
 }
 
 .Highlight__highlight--active {
-  background-color: #728276;
+  background-color: #B3CCB9;
 }
 
 .Highlight__highlight--editing {
@@ -125,16 +40,8 @@
   width: 100%;
 }
 
-.Highlight__list {
-  list-style: none;
-  padding: 0;
-}
-
 .Highlight__buttons {
-  bottom: 0;
   display: flex;
-  left: 0;
-  position: absolute;
   width: 100%;
 }
 
@@ -146,6 +53,14 @@
 .Highlight__list {
   list-style: none;
   padding: 0;
+}
+
+.Highlight__entry {
+  margin-bottom: 2rem;
+}
+
+.Highlight__content {
+  padding: 1rem;
 }
 
 .Highlight__lemma {

@@ -53,7 +53,7 @@ class Highlight extends Component {
             let lemma = annotations_by_word[0].lemma;
             output_arr.push((
               <mark
-                className={ `Highlight__highlight Highlight__highlight--${ page_data.annotations.active_annotations.find( obj => obj.id === annotations_by_word.id && obj.start === annotations_by_word.start ) !== undefined ? 'active': 'inactive'}` }
+                className={ `Highlight__highlight Highlight__highlight--${ page_data.annotations.active_annotations.length && page_data.annotations.active_annotations[0].lemma === lemma ? 'active': 'inactive'}` }
                 key={`highlight-${annotations_by_line[0].line_id}-${annotations_by_word[0].start_index}`}
                 onClick={ () => {this.onClickAnnotation(annotations_by_word)} }
                 onMouseUp={ () => this.onMouseUpText(this.props.options, page_data.section.current_user) }>
@@ -107,23 +107,39 @@ class Highlight extends Component {
       "annotations": highlight[1]
     };
     return (
-      <div className="Highlight">
-        <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
-          { this.buildSection(page_data) }
+      <div className="Highlight mdc-layout-grid">
+
+        <div className="Highlight__header">
+          <h1>{page_data.section.identifier}</h1>
         </div>
-        {
-          page_data.annotations.is_active ?
-            <Annotations
-              page_data={page_data}
-              onChangeActiveAnnotation={this.onChangeActiveAnnotation}
-              onClickAdd={this.onClickAdd}
-              onClickDelete={this.onClickDelete}
-              onClickEdit={this.onClickEdit}
-              onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
-              onSubmitNewAnnotation={this.onSubmitNewAnnotation}
-            />:
-            null
-        }
+
+        <div className="mdc-layout-grid__inner">
+
+          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-0-mobile mdc-layout-grid__cell--span-0-tablet mdc-layout-grid__cell--span-1-desktop"></div>
+
+          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-mobile mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-5-desktop">
+            <div className="Highlight__lines" id="Highlight__lines" style={{ whiteSpace: 'pre-line' }}>
+              { this.buildSection(page_data) }
+            </div>
+          </div>
+
+          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-mobile mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-5-desktop">
+            {
+              page_data.annotations.is_active ?
+                <Annotations
+                  page_data={page_data}
+                  onChangeActiveAnnotation={this.onChangeActiveAnnotation}
+                  onClickAdd={this.onClickAdd}
+                  onClickDelete={this.onClickDelete}
+                  onClickEdit={this.onClickEdit}
+                  onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
+                  onSubmitNewAnnotation={this.onSubmitNewAnnotation}
+                />:
+                null
+            }
+          </div>
+
+        </div>
       </div>
     )
   }

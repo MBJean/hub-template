@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const Annotation = props => {
   return (
-    <li className="Highlight__entry">
-      <div className="Highlight__text">
+    <li className="Highlight__entry mdc-card">
+      <div className="Highlight__content">
         {
           props.annotation_data.active_type === "edit" && props.annotation_data.active_annotation.id == props.annotation.id ?
             <form onSubmit={ (ev) => props.onSubmitEditedAnnotation(ev, props.annotation.id, props.annotation_data.active_value) }>
@@ -16,15 +16,15 @@ const Annotation = props => {
               </textarea>
               <input type="submit" value="Submit"/>
             </form>:
-            <p className="Highlight__content">{ props.annotation.content }</p>
+            <p className="">{ props.annotation.content }</p>
         }
-        <p className="Highlight__attribution">{ props.annotation.username }</p>
+        <p className="">{ props.annotation.username }</p>
       </div>
       {
         props.section_data.current_user === props.annotation.user_id ?
-          <div className="Highlight__buttons">
-            <button className="Highlight__button Highlight__edit" onClick={ () => props.onClickEdit(props.annotation) } >Edit</button>
-            <button className="Highlight__button Highlight__delete" onClick={ () => props.onClickDelete(props.annotation.id) }>Delete</button>
+          <div className="mdc-card__action-icons">
+            <button className="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" onClick={ () => props.onClickEdit(props.annotation) } >edit</button>
+            <button className="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" onClick={ () => props.onClickDelete(props.annotation.id) }>delete</button>
           </div>:
           null
       }

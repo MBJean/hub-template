@@ -6,6 +6,7 @@ const initialState = [
     section_id: null,
     lines: [],
     annotations: [],
+    identifier: "",
     current_user: ''
   },
   {
@@ -123,6 +124,7 @@ export default function Highlight(state = initialState, action) {
             ...input,
             lines: action.payload.lines,
             annotations: action.payload.annotations,
+            identifier: action.payload.identifier,
             current_user: action.payload.current_user
           }:
           input
