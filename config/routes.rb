@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do
-    	post '/dictionary', to: 'dictionary#search', as: 'dictionary'
+    	get '/dictionary/:lemma/', to: 'dictionary#show'
       resources :annotation, except: [:index]
       get 'section/:id/' => 'section#show'
     end

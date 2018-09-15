@@ -8,18 +8,17 @@
 
 require "csv"
 
-# DATA_DICTIONARY = "#{Rails.root}/lib/data/lat-dict-base.xml"
-# DOC_DICT = File.open(DATA_DICTIONARY) { |f| Nokogiri::XML(f) }
-# ENTRIES_DICT = DOC_DICT.xpath("//entryFree")
-# ENTRIES_DICT.each do |entry|
-#   Dictionary.create(
-#     #:key => entry['key'].downcase.gsub(/[^a-zA-Z]/, ""),
-#     #:key => entry['key'].downcase,
-#     :key => entry['key'].gsub(/1/, ""),
-#     :entry_id => entry['id'],
-#     :description => entry
-#   )
-# end
+# XML data to db entries for the dictionary lookup widget
+DATA_DICTIONARY = "#{Rails.root}/lib/data/lat-dict-base.xml"
+DOC_DICT = File.open(DATA_DICTIONARY) { |f| Nokogiri::XML(f) }
+ENTRIES_DICT = DOC_DICT.xpath("//entryFree")
+ENTRIES_DICT.each do |entry|
+  Dictionary.create(
+    :key => entry['key'].gsub(/1/, ""),
+    :entry_id => entry['id'],
+    :description => entry
+  )
+end
 
 # Ovid's works as a test case for how to enter Latin texts into the DB
 ovid = Author.create( :name => 'Publius Ovidius Naso', :short_name => 'Ovid' )

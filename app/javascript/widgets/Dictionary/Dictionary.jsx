@@ -40,7 +40,7 @@ export default class Dictionary extends Component {
       .filter( (value, index, self) => self.indexOf(value) === index );
     // create array of JSON objects out of db calls using array of lemmata from above
     return Promise.all(fetchArray(arr_lemmata))
-      .then( responses => self.setState({ results_defined: responses }) )
+      .then( responses => self.setState({ results_defined: responses.filter( result => result.id !== null ) }) )
       .catch( err => self.setState({ error: true }) );
   }
 
@@ -64,7 +64,6 @@ export default class Dictionary extends Component {
   }
 
   render() {
-
     return (
       <div className={ this.state.revealed ? "Dictionary Dictionary--active": "Dictionary Dictionary--inactive"}>
         <div className="Dictionary__container">
