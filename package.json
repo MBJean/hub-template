@@ -18,7 +18,11 @@
     "react-dom": "^16.3.2",
     "react-redux": "^5.0.7",
     "redux": "^4.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "vue": "^2.5.17",
+    "vue-loader": "14.2.2",
+    "vue-template-compiler": "^2.5.17",
+    "vue-turbolinks": "^2.0.3"
   },
   "devDependencies": {
     "sass-loader": "^7.1.0",
