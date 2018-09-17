@@ -10,17 +10,28 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import Dictionary from '../widgets/Dictionary/Dictionary';
 import Highlight from '../widgets/Highlight/containers/Highlight';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import HighlightReducer from '../widgets/Highlight/reducers/highlight';
+import TurbolinksAdapter from 'vue-turbolinks';
+import Vue from 'vue/dist/vue.esm'
+import App from '../widgets/Dictionary/app.vue';
 
 document.addEventListener('DOMContentLoaded', () => {
+
   document.addEventListener('turbolinks:load', () => {
-    if (!!document.getElementById("Dictionary")) {
-      ReactDOM.render(<Dictionary />, document.getElementById('Dictionary'));
+    if (!!document.getElementById("vue-dictionary")) {
+      const app = new Vue({
+        el: '#vue-dictionary',
+        template: '<App />',
+        components: { App }
+      });
+      document.getElementById("activate-dictionary").addEventListener("click", function(ev) {
+        ev.preventDefault();
+        document.querySelector(".Dictionary").classList.toggle("Dictionary--active");
+      });
     }
   })
 
