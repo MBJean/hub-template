@@ -23,11 +23,12 @@ end
 # Ovid's works as a test case for how to enter Latin texts into the DB
 ovid = Author.create( :name => 'Publius Ovidius Naso', :short_name => 'Ovid' )
 ovid_amores = Text.create( :author_id => ovid.id, :title => 'Amores', :genre => 'Elegy', :style => 'poetry' )
+ovid_metamorphoses = Text.create( :author_id => ovid.id, :title => 'Metamorphoses', :genre => 'Epic', :style => 'poetry' )
 
 # Ovid's Amores
-DATA_AMORES = "#{Rails.root}/lib/data/texts/ovid/amores/text.xml"
-DOC_AMORES = File.open(DATA_AMORES) { |f| Nokogiri::XML(f) }
-DOC_AMORES.xpath("//div1").each do |book|
+DATA_OVID_AMORES = "#{Rails.root}/lib/data/texts/ovid/amores/text.xml"
+DOC_OVID_AMORES = File.open(DATA_OVID_AMORES) { |f| Nokogiri::XML(f) }
+DOC_OVID_AMORES.xpath("//div1").each do |book|
   new_book = Book.create(
     :text_id => ovid_amores.id,
     :book_number => book['n'].to_i
@@ -44,5 +45,26 @@ DOC_AMORES.xpath("//div1").each do |book|
         :content => line.text.to_s.squish
       )
     end
+  end
+end
+
+# Ovid's Metamorphoses
+DATA_OVID_METAMORPHOSES = "#{Rails.root}/lib/data/texts/ovid/metamorphoses/text.xml"
+DOC_OVID_METAMORPHOSES = File.open(DATA_OVID_METAMORPHOSES) { |f| Nokogiri::XML(f) }
+DOC_OVID_METAMORPHOSES.xpath("//div1").each do |book|
+  new_book = Book.create(
+    :text_id => ovid_metamorphoses.id,
+    :book_number => book['n'].to_i
+  )
+  new_section = Section.create(
+    :book_id => new_book.id,
+    :identifier => '1',
+  )
+  book.xpath("l").each_with_index do |line, index|
+    line = Line.create(
+      :section_id => new_section.id,
+      :line_number => index + 1,
+      :content => line.text.to_s.squish
+    )
   end
 end

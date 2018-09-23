@@ -14,7 +14,19 @@ class AuthorsController < ApplicationController
     @author = Author.find_by short_name: params[:short_name].titleize
     @text = @author.texts.find_by title: params[:text].titleize
     @books = @text.books
-    render :by_text
+    if @books.length > 1
+      render :by_text
+    else
+      @book = @text.books.first
+      @sections = @book.sections
+      if @sections.length > 1
+        render :by_book
+      else
+        @section = @book.sections.first
+        @lines = @section.lines
+        render :by_section
+      end
+    end
   end
 
   def by_book
@@ -22,7 +34,13 @@ class AuthorsController < ApplicationController
     @text = @author.texts.find_by title: params[:text].titleize
     @book = @text.books.find_by book_number: params[:book_number]
     @sections = @book.sections
-    render :by_book
+    if @sections.length > 1
+      render :by_book
+    else
+      @section = @book.sections.first
+      @lines = @section.lines
+      render :by_section
+    end
   end
 
   def by_section
@@ -42,5 +60,8 @@ class AuthorsController < ApplicationController
     @line = @section.lines.find_by line_number: params[:line_number]
     render :by_line
   end
+
+  private
+
 
 end
