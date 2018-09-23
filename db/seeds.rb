@@ -24,6 +24,7 @@ end
 ovid = Author.create( :name => 'Publius Ovidius Naso', :short_name => 'Ovid' )
 ovid_amores = Text.create( :author_id => ovid.id, :title => 'Amores', :genre => 'Elegy', :style => 'poetry' )
 ovid_metamorphoses = Text.create( :author_id => ovid.id, :title => 'Metamorphoses', :genre => 'Epic', :style => 'poetry' )
+ovid_fasti = Text.create( :author_id => ovid.id, :title => 'Fasti', :genre => 'Elegy', :style => 'poetry' )
 
 # Ovid's Amores
 DATA_OVID_AMORES = "#{Rails.root}/lib/data/texts/ovid/amores/text.xml"
@@ -54,6 +55,27 @@ DOC_OVID_METAMORPHOSES = File.open(DATA_OVID_METAMORPHOSES) { |f| Nokogiri::XML(
 DOC_OVID_METAMORPHOSES.xpath("//div1").each do |book|
   new_book = Book.create(
     :text_id => ovid_metamorphoses.id,
+    :book_number => book['n'].to_i
+  )
+  new_section = Section.create(
+    :book_id => new_book.id,
+    :identifier => '1',
+  )
+  book.xpath("l").each_with_index do |line, index|
+    line = Line.create(
+      :section_id => new_section.id,
+      :line_number => index + 1,
+      :content => line.text.to_s.squish
+    )
+  end
+end
+
+# Ovid's Fasti
+DATA_OVID_FASTI = "#{Rails.root}/lib/data/texts/ovid/fasti/text.xml"
+DOC_OVID_FASTI = File.open(DATA_OVID_FASTI) { |f| Nokogiri::XML(f) }
+DOC_OVID_FASTI.xpath("//div1").each do |book|
+  new_book = Book.create(
+    :text_id => ovid_fasti.id,
     :book_number => book['n'].to_i
   )
   new_section = Section.create(
