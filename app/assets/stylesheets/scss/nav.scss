@@ -7,7 +7,8 @@
   box-shadow: $box-shadow-medium;
   font-size: 1rem;
   padding: 1em;
-  position: relative;
+  position: fixed;
+  top: 0;
   z-index: 2;
   .nav__container {
     align-items: center;

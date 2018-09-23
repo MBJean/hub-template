@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let text_id = document.getElementById("Highlight").dataset.text;
       let book_id = document.getElementById("Highlight").dataset.book;
       let section_id = document.getElementById("Highlight").dataset.section;
+      let title = document.getElementById("Highlight").dataset.title;
       const STORE = createStore(
         HighlightReducer,
         applyMiddleware(thunkMiddleware)
@@ -53,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 author_id: author_id,
                 text_id: text_id,
                 book_id: book_id,
-                section_id: section_id
+                section_id: section_id,
+                title: title
               }
             }
           />

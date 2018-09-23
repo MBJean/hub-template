@@ -109,8 +109,13 @@ class Highlight extends Component {
     return (
       <div className="Highlight mdc-layout-grid">
 
-        <div className="Highlight__header">
-          <h1>{page_data.section.identifier}</h1>
+        <div className="mdc-layout-grid__inner">
+          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-0-mobile mdc-layout-grid__cell--span-0-tablet mdc-layout-grid__cell--span-1-desktop"></div>
+          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-mobile mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-5-desktop">
+            <div className="Highlight__header">
+              <h1>{this.props.options.title}</h1>
+            </div>
+          </div>
         </div>
 
         <div className="mdc-layout-grid__inner">

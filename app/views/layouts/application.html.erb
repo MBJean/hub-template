@@ -17,7 +17,9 @@
     <p class="alert--alert"><%= alert %></p>
     <%= render "partials/navigation" %>
     <%= render "partials/dictionary" %>
-    <%= yield %>
+    <div class="main">
+      <%= yield %>
+    </div>
     <%= javascript_pack_tag 'application' %>
   </body>
 </html>
