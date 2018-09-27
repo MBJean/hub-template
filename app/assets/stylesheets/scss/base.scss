@@ -60,7 +60,7 @@ body {
 	padding: 0;
 }
 
-.app {
+.app__body {
 	align-items: stretch;
 	display: flex;
 	margin-top: calc(4.5rem + 2px);
@@ -69,6 +69,12 @@ body {
 
 .app__right-panel {
 	flex-grow: 1;
+}
+
+.app__footer {
+	border-top: 2px solid $brand-black;
+	padding: 1.5rem 1rem 2rem;
+	text-align: center;
 }
 
 .alert--notice,

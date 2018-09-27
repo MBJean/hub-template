@@ -60,25 +60,30 @@
 
 <style scoped>
   .Dictionary__entry {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-left: 2px solid #37645b;
     cursor: zoom-in;
     font-size: 1rem;
     height: 200px;
-    padding: 2em 3em 5em;
+    padding: 0 3em 5em;
     margin-bottom: 2em;
     overflow: hidden;
     transition: all 0.3s ease;
   }
   .Dictionary__entry--active {
     background-color: #FFFFFF;
+    border-left: 0;
     box-shadow: none;
     cursor: zoom-out;
     height: 100vh;
     margin-bottom: 0;
     max-height: 100%;
     overflow: scroll;
+    padding: 2em 3em 5em;
     position: absolute;
     top: 0; left: 0;
     width: 100%;
+  }
+  .Dictionary__entry:not(.Dictionary__entry--active):hover {
+    border-left: 4px solid #37645b;
   }
 </style>

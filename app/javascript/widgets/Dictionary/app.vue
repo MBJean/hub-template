@@ -84,8 +84,14 @@
     display: block;
   }
   analyses analysis {
+    border-left: 2px solid #37645b;
     box-sizing: border-box;
     display: block;
+    margin-bottom: 0.25em;
+    padding-left: 3em;
+  }
+  analyses analysis:last-child {
+    margin-bottom: 0;
   }
   analyses analysis expandedForm,
   analyses analysis form {
@@ -99,7 +105,7 @@
 <style scoped>
   .Dictionary {
     background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-right: 2px solid #1b161e;
     font-size: 1rem;
     height: 100vh;
     left: 0;
@@ -153,6 +159,7 @@
     appearance: none;
     background-color: transparent;
     border: 0;
+    color: #9d202e;
     cursor: pointer;
     font-size: 2rem;
     position: absolute;
