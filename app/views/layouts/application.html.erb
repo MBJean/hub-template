@@ -10,15 +10,20 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application' %>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway" rel="stylesheet">
   </head>
 
   <body>
     <p class="alert--notice"><%= notice %></p>
     <p class="alert--alert"><%= alert %></p>
     <%= render "partials/navigation" %>
-    <%= render "partials/dictionary" %>
-    <div class="main">
-      <%= yield %>
+    <div class="app">
+      <div class="app__left-panel">
+        <%= render "partials/sidebar" %>
+      </div>
+      <div class="app__right-panel">
+        <%= yield %>
+      </div>
     </div>
     <%= javascript_pack_tag 'application' %>
   </body>

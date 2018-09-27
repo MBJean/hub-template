@@ -1,11 +1,9 @@
 .nav.nav--primary
   .nav__container
-    = link_to "Latin Learning Hub", root_path, class: "nav__title"
+    = link_to "Latin Learning Hub", root_path, class: "nav__title nav__link"
     %ul.nav__list
       %li.nav__item
-        = link_to "Latin Texts", :author_path
-      %li.nav__item
-        = link_to "Dictionary", "#", :clas => 'nav__link', :id => "activate-dictionary"
+        = link_to "Latin Texts", :author_path, :class => 'nav__link'
       %li.nav__text &#124;
       - if user_signed_in?
         %li.nav__item= link_to "Profile", user_profile_path, :class => "nav__link"

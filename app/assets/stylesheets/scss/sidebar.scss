@@ -1,0 +1,20 @@
+.sidebar {
+  background-color: $white;
+  border-right: 2px solid $brand-black;
+  color: $brand-gray-1;
+  height: 100%;
+  padding: 1rem;
+}
+
+.sidebar__nav {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar__nav-button {
+  appearance: none;
+  background-color: transparent;
+  border: 0;
+  color: $brand-gray-1;
+  cursor: pointer;
+}

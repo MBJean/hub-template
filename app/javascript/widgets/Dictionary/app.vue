@@ -1,6 +1,7 @@
 <template>
   <div class="Dictionary">
     <div class="Dictionary__container">
+      <button class="Dictionary__close" id="button__deactivate-dictionary">&#215;</button>
       <h2 class="Dictionary__title">Latin Dictionary</h2>
       <form v-on:submit="onSubmit" class="Dictionary__form">
         <label>
@@ -147,5 +148,14 @@
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+  .Dictionary__close {
+    appearance: none;
+    background-color: transparent;
+    border: 0;
+    cursor: pointer;
+    font-size: 2rem;
+    position: absolute;
+    top: 1rem; right: 1rem;
   }
 </style>

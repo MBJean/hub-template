@@ -1,7 +1,7 @@
 .form__input {
   background-color: transparent;
   border: 0;
-  border-bottom: 1px solid $light-grey;
+  border-bottom: 1px solid $brand-black;
   border-radius: 0;
   box-sizing: border-box;
   font-size: 1em;
@@ -12,7 +12,7 @@
 }
 
 .form__input:focus {
-  border-bottom: 1px solid $green;
+  border-bottom: 1px solid $brand-black;
   outline: 0;
 }
 
@@ -29,6 +29,3 @@
   padding: 0.5em 1em;
   text-transform: uppercase;
 }
-
-.form__button--red { background-color: $red; }
-.form__button--blue { background-color: $blue; }

@@ -28,7 +28,13 @@ document.addEventListener('DOMContentLoaded', () => {
         template: '<App />',
         components: { App }
       });
-      document.getElementById("activate-dictionary").addEventListener("click", function(ev) {
+      // open the dictionary sidebar via the main nav link
+      document.getElementById("button__activate-dictionary").addEventListener("click", function(ev) {
+        ev.preventDefault();
+        document.querySelector(".Dictionary").classList.toggle("Dictionary--active");
+      });
+      // close the dictionary sidebar via the close button
+      document.getElementById("button__deactivate-dictionary").addEventListener("click", function(ev) {
         ev.preventDefault();
         document.querySelector(".Dictionary").classList.toggle("Dictionary--active");
       });

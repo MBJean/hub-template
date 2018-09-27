@@ -16,9 +16,9 @@ const Annotation = props => {
               </textarea>
               <input type="submit" value="Submit"/>
             </form>:
-            <p className="">{ props.annotation.content }</p>
+            <p className="Highlight__annotation-text">{ props.annotation.content }</p>
         }
-        <p className="">{ props.annotation.username }</p>
+        <p className="Highlight__username">{ props.annotation.username }</p>
       </div>
       {
         props.section_data.current_user === props.annotation.user_id ?

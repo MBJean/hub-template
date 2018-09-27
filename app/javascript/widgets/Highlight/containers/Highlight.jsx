@@ -128,21 +128,19 @@ class Highlight extends Component {
             </div>
           </div>
 
-          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-mobile mdc-layout-grid__cell--span-3-tablet mdc-layout-grid__cell--span-5-desktop">
-            {
-              page_data.annotations.is_active ?
-                <Annotations
-                  page_data={page_data}
-                  onChangeActiveAnnotation={this.onChangeActiveAnnotation}
-                  onClickAdd={this.onClickAdd}
-                  onClickDelete={this.onClickDelete}
-                  onClickEdit={this.onClickEdit}
-                  onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
-                  onSubmitNewAnnotation={this.onSubmitNewAnnotation}
-                />:
-                null
-            }
-          </div>
+          {
+            page_data.annotations.is_active ?
+              <Annotations
+                page_data={page_data}
+                onChangeActiveAnnotation={this.onChangeActiveAnnotation}
+                onClickAdd={this.onClickAdd}
+                onClickDelete={this.onClickDelete}
+                onClickEdit={this.onClickEdit}
+                onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
+                onSubmitNewAnnotation={this.onSubmitNewAnnotation}
+              />:
+              null
+          }
 
         </div>
       </div>

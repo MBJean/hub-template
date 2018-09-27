@@ -1,13 +1,25 @@
 <template>
-  <li class="Dictionary__entry" v-html="result.description"></li>
+  <li class="Dictionary__entry" v-bind:class="{ 'Dictionary__entry--active': is_open }">
+    <div v-on:click="toggleEntry" v-html="result.description"></div>
+  </li>
 </template>
 
 <script>
   export default {
+    data() {
+      return {
+        is_open: false
+      }
+    },
     props: [
       'result',
       'testFunction'
-    ]
+    ],
+    methods: {
+      toggleEntry: function() {
+        this.is_open = !this.is_open;
+      }
+    }
   }
 </script>
 
@@ -49,7 +61,24 @@
 <style scoped>
   .Dictionary__entry {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 2rem 3em;
+    cursor: zoom-in;
+    font-size: 1rem;
+    height: 200px;
+    padding: 2em 3em 5em;
     margin-bottom: 2em;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .Dictionary__entry--active {
+    background-color: #FFFFFF;
+    box-shadow: none;
+    cursor: zoom-out;
+    height: 100vh;
+    margin-bottom: 0;
+    max-height: 100%;
+    overflow: scroll;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
   }
 </style>

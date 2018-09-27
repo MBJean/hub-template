@@ -17,7 +17,7 @@ const Annotations = props => {
       {
         props.page_data.annotations.active_type === "add" ?
           <div className="Highlight__add">
-            <p><b>Add new annotation</b></p>
+            <h2>Add new annotation</h2>
             <form onSubmit={ (ev) => props.onSubmitNewAnnotation(ev, { annotation: props.page_data.annotations.active_annotations[0], value: props.page_data.annotations.active_value }) }>
               <textarea
                 className="Highlight__textarea"
@@ -50,9 +50,9 @@ const Annotations = props => {
       {
         props.page_data.annotations.active_type === "new" ?
           <div className="Highlight__editing">
-            <p><b>Add new annotation</b></p>
+            <h2>Add new annotation</h2>
             <ul className="Highlight__list">
-              <li>Lines(s): {`${props.page_data.annotations.active_annotation.line}`}</li>
+              <li>Line(s): {`${props.page_data.annotations.active_annotation.line}`}</li>
               <li>Lemma: <i>{`${props.page_data.annotations.active_annotation.lemma}`}</i></li>
             </ul>
             <form onSubmit={ (ev) => props.onSubmitNewAnnotation(ev, { annotation: props.page_data.annotations.active_annotation, value: props.page_data.annotations.active_value }) }>
