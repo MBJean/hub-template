@@ -14,7 +14,6 @@ const initialState = [
     active_annotations: [], // already present annotations
     active_annotation: {}, // annotation being added to, edited, etc.
     active_type: "", // "new", "additional", or "old"
-    active_value: "", // string value for annotation being edited, added to, etc.
     is_active: false
   },
   {
@@ -45,8 +44,7 @@ export default function Highlight(state = initialState, action) {
             ...input,
             active_annotation: action.annotation,
             active_type: "edit",
-            is_active: true,
-            active_value: action.annotation.content
+            is_active: true
           }:
           input
       );
@@ -103,16 +101,6 @@ export default function Highlight(state = initialState, action) {
             active_annotations: action.annotations,
             active_type: "list",
             is_active: true
-          }:
-          input
-      );
-
-    case HighlightActionTypes.UPDATE_ACTIVE_ANNOTATION:
-      return state.map((input, index) =>
-        index === 1 ?
-          {
-            ...input,
-            active_value: action.value
           }:
           input
       );

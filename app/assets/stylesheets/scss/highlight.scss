@@ -3,10 +3,28 @@
   display: inline-block;
 }
 
+.Highlight__annotation-column {
+  animation: column_in 0.2s ease;
+  border-left: 2px solid $brand-black;
+  height: 100%;
+  padding: 2rem 3rem;
+  position: relative;
+}
+
+@keyframes column_in {
+  from { transform: translateX(100px); }
+  to { transform: translateX(0); }
+}
+
 .Highlight__annotations {
+  border-left: 2px solid $brand-black;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 4rem 3rem;
   position: fixed;
-  top: 100px; left: 50%;
-  width: 40%;
+  right: 0;
+  top: 70px;
+  width: 50%;
 }
 
 .Highlight__lines {
@@ -66,6 +84,7 @@
 }
 
 .Highlight__entry {
+  border-left: 2px solid $brand-black;
   margin-bottom: 2rem;
 }
 

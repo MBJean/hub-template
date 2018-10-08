@@ -72,8 +72,10 @@ body {
 }
 
 .app__footer {
+	background-color: white;
 	border-top: 2px solid $brand-black;
 	padding: 1.5rem 1rem 2rem;
+	position: relative;
 	text-align: center;
 }
 

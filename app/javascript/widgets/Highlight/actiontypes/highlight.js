@@ -6,6 +6,5 @@ export const FETCH_FAILURE = 'highlight/FETCH_FAILURE';
 export const RESET_STATE = 'highlight/RESET_STATE';
 export const SET_SECTION = 'highlight/SET_SECTION';
 export const UPDATE_ACTIVE_ANNOTATIONS = 'highlight/UPDATE_ACTIVE_ANNOTATIONS';
-export const UPDATE_ACTIVE_ANNOTATION = 'highlight/UPDATE_ACTIVE_ANNOTATION';
 export const UPDATE_EDITED_ANNOTATION = 'highlight/UPDATE_EDITED_ANNOTATION';
 export const UPDATE_SECTION = 'highlight/UPDATE_SECTION';

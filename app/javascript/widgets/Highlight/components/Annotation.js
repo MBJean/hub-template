@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 const Annotation = props => {
   return (
-    <li className="Highlight__entry mdc-card">
+    <li className="Highlight__entry">
       <div className="Highlight__content">
         {
           props.annotation_data.active_type === "edit" && props.annotation_data.active_annotation.id == props.annotation.id ?
-            <form onSubmit={ (ev) => props.onSubmitEditedAnnotation(ev, props.annotation.id, props.annotation_data.active_value) }>
+            <form onSubmit={ (ev) => props.onSubmitEditedAnnotation(ev, props.annotation.id, props.value) }>
               <textarea
                 className="Highlight__textarea"
                 maxLength="1000"
-                onChange={ (ev) => props.onChangeActiveAnnotation(ev.target.value) }
-                value={props.annotation_data.active_value}>
+                onChange={ (ev) => props.updateValue(ev) }
+                value={props.value}>
               </textarea>
               <input type="submit" value="Submit"/>
             </form>:
@@ -35,11 +35,11 @@ const Annotation = props => {
 Annotation.propTypes = {
   annotation: PropTypes.object.isRequired,
   annotation_data: PropTypes.object.isRequired,
-  onChangeActiveAnnotation: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
   onClickEdit: PropTypes.func.isRequired,
   onSubmitEditedAnnotation: PropTypes.func.isRequired,
-  section_data: PropTypes.object.isRequired
+  section_data: PropTypes.object.isRequired,
+  updateValue: PropTypes.func.isRequired
 };
 
 export default Annotation;

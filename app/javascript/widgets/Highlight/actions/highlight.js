@@ -62,13 +62,6 @@ export const fetchSection = () => {
   }
 }
 
-export const onChangeActiveAnnotation = (value) => {
-  return {
-    type: HighlightActionTypes.UPDATE_ACTIVE_ANNOTATION,
-    value
-  };
-}
-
 export const onChangeEditedAnnotation = (index, value) => {
   return {
     type: HighlightActionTypes.UPDATE_EDITED_ANNOTATION,

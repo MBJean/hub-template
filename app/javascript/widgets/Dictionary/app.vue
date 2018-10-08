@@ -12,8 +12,10 @@
           <input type="submit" value="Search" />
         </div>
       </form>
+      <h3 class="Dictionary__entry-title">Possible parsed formations</h3>
       <div v-html="results_parsed" class="Dictionary__parsed">
       </div>
+      <h3 class="Dictionary__entry-title">Lexicon entries</h3>
       <ul class="Dictionary__list">
         <entry
           v-for="result in results_defined"
@@ -84,7 +86,7 @@
     display: block;
   }
   analyses analysis {
-    border-left: 2px solid #37645b;
+    border-left: 4px solid #37645b;
     box-sizing: border-box;
     display: block;
     margin-bottom: 0.25em;
@@ -164,5 +166,11 @@
     font-size: 2rem;
     position: absolute;
     top: 1rem; right: 1rem;
+  }
+  .Dictionary__entry-title {
+    color: #37645b;
+    font-size: 0.9rem;
+    margin: 0 0 0 3rem;
+    text-transform: uppercase;
   }
 </style>
