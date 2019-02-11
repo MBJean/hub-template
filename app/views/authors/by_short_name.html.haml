@@ -1,0 +1,7 @@
+.mdc-layout-grid
+  .mdc-layout-grid__inner
+    .mdc-layout-grid__cell--span-12
+      %h1= @author.name
+      %ul
+        - @texts.each do |text|
+          %li= link_to text.title, "/authors/#{@author.short_name.downcase}/#{text.title.downcase.gsub(' ', '-')}"

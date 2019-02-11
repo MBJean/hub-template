@@ -1,0 +1,5 @@
+#Highlight{ 'data-author' => @author.id,
+'data-text' => @text.id,
+'data-book' => @book.id,
+'data-section' => @section.id,
+'data-title' => "#{@author.short_name}’s #{@text.title} #{@text.books.length > 1 ? @book.book_number: ''}#{@book.sections.length > 1 ? '.' + @section.identifier: ''}" }

@@ -9,4 +9,6 @@ class User < ApplicationRecord
   has_many :skills, through: :skill_progresses
   has_many :vocabulary_books
   has_many :words, through: :vocabulary_books
+  has_many :annotations
+  has_and_belongs_to_many :classrooms
 end

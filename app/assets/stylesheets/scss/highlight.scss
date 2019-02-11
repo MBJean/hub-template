@@ -1,0 +1,106 @@
+.Highlight,
+.Highlight__line {
+  display: inline-block;
+}
+
+.Highlight__annotation-column {
+  animation: column_in 0.2s ease;
+  border-left: 2px solid $brand-black;
+  height: 100%;
+  padding: 2rem 3rem;
+  position: relative;
+}
+
+@keyframes column_in {
+  from { transform: translateX(100px); }
+  to { transform: translateX(0); }
+}
+
+.Highlight__annotations {
+  border-left: 2px solid $brand-black;
+  height: 100%;
+  overflow-y: scroll;
+  padding: 4rem 3rem;
+  position: fixed;
+  right: 0;
+  top: 70px;
+  width: 50%;
+}
+
+.Highlight__lines {
+  font-family: 'Raleway', sans-serif;
+}
+
+.Highlight__line {
+  font-size: 1.5rem;
+  margin: 0.5em 0;
+  position: relative;
+}
+
+.Highlight__highlight {
+  cursor: pointer;
+  background-color: #E0FFE7;
+  margin: 0 0.1em;
+  transition: background-color 0.3s ease;
+}
+
+.Highlight__highlight--active {
+  background-color: #B3CCB9;
+}
+
+.Highlight__highlight--editing {
+  background-color: #DAE2FF;
+}
+
+.Highlight__close {
+  top: 1em; right: 1.5em;
+  cursor: pointer;
+  opacity: 0.4;
+  position: absolute;
+}
+
+.Highlight__editing {
+  padding: 0 2em;
+}
+
+.Highlight__textarea {
+  //margin: 2em;
+  width: 100%;
+}
+
+.Highlight__buttons {
+  display: flex;
+  width: 100%;
+}
+
+.Highlight__buttons .Highlight__button {
+  flex-basis: 0;
+  flex-grow: 1;
+}
+
+.Highlight__list {
+  list-style: none;
+  padding: 0;
+}
+
+.Highlight__entry {
+  border-left: 2px solid $brand-black;
+  margin-bottom: 2rem;
+}
+
+.Highlight__content {
+  padding: 1rem;
+}
+
+.Highlight__lemma {
+  white-space: pre-line;
+}
+
+.Highlight__username {
+  text-align: right;
+}
+
+@keyframes highlight_bubble_in {
+  from { opacity: 0; transform: translate(90%, -50%); }
+  to { opacity: 1; transform: translate(100%, -50%); }
+}

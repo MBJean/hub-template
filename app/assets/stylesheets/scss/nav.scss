@@ -2,12 +2,12 @@
 
 .nav--primary {
   background-color: $white;
-  border-bottom: 1px solid $light-grey;
+  border-bottom: 2px solid $brand-black;
   border-radius: 0;
-  box-shadow: $box-shadow-medium;
   font-size: 1rem;
-  padding: 1em;
-  position: relative;
+  padding: 2em 1em 1.5em;
+  position: fixed;
+  top: 0;
   z-index: 2;
   .nav__container {
     align-items: center;
@@ -18,24 +18,6 @@
   }
 }
 
-.nav--secondary {
-  background-color: $light-grey;
-  border-bottom: 1px solid $light-grey;
-  border-radius: 0;
-  box-shadow: $box-shadow-small;
-  font-size: 1rem;
-  padding: 1em;
-  position: relative;
-  z-index: 1;
-  .nav__container {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-    margin: auto;
-    max-width: 1200px;
-  }
-}
-
 .nav__list {
   align-items: center;
   display: flex;
@@ -43,23 +25,45 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  width: 100%;
 }
 
 .nav__title {
   display: block;
-  min-width: 25%;
   text-transform: uppercase;
 }
 
 .nav__text, .nav__item { margin-right: 2em; }
 
-.nav__text { color: $dark-grey; }
+.nav__text { color: $brand-black; }
+
+.nav__link {
+  position: relative;
+}
 
 .nav__link,
 .nav__link:hover,
 .nav__link:visited,
-.nav__link:focus { color: $font-black; }
+.nav__link:focus {
+  color: $brand-black;
+  text-decoration: none;
+}
+
+.nav__link::after,
+.nav__link::after {
+  background-color: $brand-black;
+  bottom: calc(-1.5em - 2px);
+  content: '';
+  height: 0;
+  left: 0;
+  position: absolute;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.nav__link:hover::after,
+.nav__link:focus::after {
+  height: 5px;
+}
 
 .nav__link--active { font-weight: bold; }
 

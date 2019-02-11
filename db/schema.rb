@@ -10,15 +10,74 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180513182636) do
+ActiveRecord::Schema.define(version: 20180904110500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "annotations", force: :cascade do |t|
+    t.string "content"
+    t.bigint "user_id"
+    t.bigint "section_id"
+    t.bigint "line_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "lemma"
+    t.integer "start_index"
+    t.string "username"
+    t.index ["line_id"], name: "index_annotations_on_line_id"
+    t.index ["section_id"], name: "index_annotations_on_section_id"
+    t.index ["user_id"], name: "index_annotations_on_user_id"
+  end
+
+  create_table "authors", force: :cascade do |t|
+    t.string "name"
+    t.string "short_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.integer "book_number"
+    t.bigint "text_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["text_id"], name: "index_books_on_text_id"
+  end
+
+  create_table "classrooms", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "classrooms_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "classroom_id", null: false
+    t.index ["classroom_id"], name: "index_classrooms_users_on_classroom_id"
+    t.index ["user_id"], name: "index_classrooms_users_on_user_id"
+  end
 
   create_table "dictionaries", force: :cascade do |t|
     t.string "key"
     t.string "entry_id"
     t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.bigint "roles_id"
+    t.index ["roles_id"], name: "index_groups_on_roles_id"
+    t.index ["user_id"], name: "index_groups_on_user_id"
+  end
+
+  create_table "institutions", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,6 +111,31 @@ ActiveRecord::Schema.define(version: 20180513182636) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "lines", force: :cascade do |t|
+    t.string "line_number"
+    t.bigint "section_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "text"
+    t.string "content"
+    t.index ["section_id"], name: "index_lines_on_section_id"
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.integer "level"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "sections", force: :cascade do |t|
+    t.string "identifier"
+    t.bigint "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_sections_on_book_id"
+  end
+
   create_table "skill_progresses", force: :cascade do |t|
     t.decimal "completion"
     t.decimal "proficiency"
@@ -71,6 +155,16 @@ ActiveRecord::Schema.define(version: 20180513182636) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "texts", force: :cascade do |t|
+    t.string "title"
+    t.string "genre"
+    t.string "style"
+    t.bigint "author_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_texts_on_author_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -86,6 +180,7 @@ ActiveRecord::Schema.define(version: 20180513182636) do
     t.datetime "last_sign_in_at"
     t.inet "current_sign_in_ip"
     t.inet "last_sign_in_ip"
+    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -105,6 +200,8 @@ ActiveRecord::Schema.define(version: 20180513182636) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "groups", "roles", column: "roles_id"
+  add_foreign_key "groups", "users"
   add_foreign_key "lesson_activities", "lessons"
   add_foreign_key "lesson_activities", "users"
   add_foreign_key "lesson_levels", "lessons"

@@ -2,13 +2,30 @@
   "name": "hub-template",
   "private": true,
   "dependencies": {
+    "@material/button": "^0.39.1",
+    "@material/card": "^0.39.1",
+    "@material/checkbox": "^0.39.1",
+    "@material/form-field": "^0.39.1",
+    "@material/icon-button": "^0.39.1",
+    "@material/layout-grid": "^0.34.0",
+    "@material/list": "^0.39.1",
+    "@material/textfield": "^0.39.1",
+    "@material/top-app-bar": "^0.39.1",
     "@rails/webpacker": "3.5",
     "babel-preset-react": "^6.24.1",
     "prop-types": "^15.6.1",
     "react": "^16.3.2",
-    "react-dom": "^16.3.2"
+    "react-dom": "^16.3.2",
+    "react-redux": "^5.0.7",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "vue": "^2.5.17",
+    "vue-loader": "14.2.2",
+    "vue-template-compiler": "^2.5.17",
+    "vue-turbolinks": "^2.0.3"
   },
   "devDependencies": {
+    "sass-loader": "^7.1.0",
     "webpack-dev-server": "2.11.2"
   }
 }
