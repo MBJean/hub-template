@@ -1,30 +1,26 @@
 <template>
   <div class="Dictionary">
-    <div class="Dictionary__container">
-      <button class="Dictionary__close" id="button__deactivate-dictionary">&#215;</button>
-      <h2 class="Dictionary__title">Latin Dictionary</h2>
-      <form v-on:submit="onSubmit" class="Dictionary__form">
-        <label>
-          <p class="Dictionary__subtitle">Search for a Latin word:</p>
-          <input type="text" value="" v-model="search_value" />
-        </label>
-        <div class="Dictionary__buttons">
-          <input type="submit" value="Search" />
-        </div>
-      </form>
-      <h3 class="Dictionary__entry-title">Possible parsed formations</h3>
-      <div v-html="results_parsed" class="Dictionary__parsed">
+    <button class="Dictionary__close" @click="$emit('closeDictionary')">
+      <i class="material-icons">close</i>
+    </button>
+    <h2 class="Dictionary__title">Dictionary</h2>
+    <form v-on:submit="onSubmit" class="Dictionary__form">
+      <label>
+        <p class="Dictionary__subtitle">Search for a Latin word:</p>
+        <input type="text" value="" v-model="search_value" />
+      </label>
+      <div class="Dictionary__buttons">
+        <input type="submit" value="Search" />
       </div>
-      <h3 class="Dictionary__entry-title">Lexicon entries</h3>
-      <ul class="Dictionary__list">
-        <entry
-          v-for="result in results_defined"
-          v-bind:result="result"
-          v-bind:key=""
-          v-bind:testFunction="testFunction">
-        </entry>
-      </ul>
-    </div>
+    </form>
+    <h3 class="Dictionary__entry-title">Possible parsed formations</h3>
+    <div v-html="results_parsed" class="Dictionary__parsed" />
+    <h3 class="Dictionary__entry-title">Lexicon entries</h3>
+    <ul class="Dictionary__list">
+      <li class="Dictionary__entry" v-for="result in results_defined">
+        <div v-html="result.description" />
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -71,9 +67,6 @@
           this.results_parsed = text;
         })
         .catch( err => this.errorHandler(err) );
-      },
-      testFunction: function() {
-        console.log('this is a test');
       }
     },
     components: { Entry }
@@ -86,11 +79,10 @@
     display: block;
   }
   analyses analysis {
-    border-left: 4px solid #37645b;
     box-sizing: border-box;
-    display: block;
+    display: flex;
+    justify-content: flex-start;
     margin-bottom: 0.25em;
-    padding-left: 3em;
   }
   analyses analysis:last-child {
     margin-bottom: 0;
@@ -99,33 +91,67 @@
   analyses analysis form {
     display: none;
   }
-  analyses analysis * {
-    margin-right: 1rem;
+  analyses analysis > * {
+    flex-basis: 1;
+    flex-grow: 0;
+    flex-shrink: 0;
+    margin-right: 0.5rem;
+  }
+  sense {
+    display: block;
+    margin: 0.5rem 0;
+  }
+  sense[level="2"] {
+    margin-left: 0.5em;
+  }
+  sense[level="3"] {
+    margin-left: 1em;
+  }
+  sense[level="4"] {
+    margin-left: 1.5em;
+  }
+  sense[level="5"] {
+    margin-left: 2em;
+  }
+  sense[level="6"] {
+    margin-left: 2.5em;
+  }
+  hi[rend="ital"], bibl, quote, author {
+    font-weight: normal;
+  }
+  hi[rend="ital"] {
+    font-weight: bold;
+  }
+  quote {
+    color: #181818;
+  }
+  author {
+    color: #303030;
+  }
+  bibl {
+    color: #606060;
+  }
+  cit {
+    font-family: 'Times New Roman', serif;
+    font-style: italic;
+  }
+  entryFree {
+    display: block;
+    font-family: Georgia, serif;
+    letter-spacing: 0.1px;
+    width: 100%;
+  }
+  entryFree:last-child {
+    border-bottom: none;
   }
 </style>
 
-<style scoped>
+<style lang="scss" scoped>
   .Dictionary {
-    background-color: white;
-    border-right: 2px solid #1b161e;
-    font-size: 1rem;
-    height: 100vh;
-    left: 0;
-    max-width: 80vw;
-    position: fixed;
-    top: 0;
-    transform: translateX(-100%);
-    transition: transform 0.6s cubic-bezier(0.79, 0.04, 0, 1.01);
-    width: 450px;
-    z-index: 10;
-  }
-  .Dictionary--active {
-    transform: translateX(0);
-  }
-  .Dictionary__container {
-    height: 100%;
+    max-height: 100%;
     overflow-y: scroll;
-    padding: 4em 1em;
+    padding: 2rem 1rem;
+    position: relative;
   }
   .Dictionary__form,
   .Dictionary__parsed { margin-bottom: 4em; }
@@ -138,19 +164,6 @@
   .Dictionary__buttons {
     text-align: right;
     width: 100%;
-  }
-  .Dictionary__container:after {
-    content  : "";
-    position : absolute;
-    z-index  : 1;
-    bottom   : 0;
-    left     : 0;
-    pointer-events   : none;
-    background-image : linear-gradient(to bottom,
-                      rgba(255,255,255, 0),
-                      rgba(255,255,255, 1) 50%);
-    width    : 100%;
-    height   : 4em;
   }
   .Dictionary__list {
     list-style: none;
@@ -170,7 +183,10 @@
   .Dictionary__entry-title {
     color: #37645b;
     font-size: 0.9rem;
-    margin: 0 0 0 3rem;
     text-transform: uppercase;
+  }
+  .Dictionary__entry {
+    font-size: 1rem;
+    margin-bottom: 2em;
   }
 </style>

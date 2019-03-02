@@ -17,14 +17,7 @@
     <p class="alert--notice"><%= notice %></p>
     <p class="alert--alert"><%= alert %></p>
     <%= render "partials/navigation" %>
-    <div class="app__body">
-      <div class="app__left-panel">
-        <%= render "partials/sidebar" %>
-      </div>
-      <div class="app__right-panel">
-        <%= yield %>
-      </div>
-    </div>
+    <%= yield %>
     <footer class="app__footer">
       <p>Copyright stuff TBD</p>
       <%= javascript_pack_tag 'application' %>

@@ -41,6 +41,9 @@ DOC_OVID_AMORES.xpath("//div1").each do |book|
     )
     section.xpath("l").each_with_index do |line, index|
       line = Line.create(
+        :author_id => ovid.id,
+        :text_id => ovid_amores.id,
+        :book_id => new_book.id,
         :section_id => new_section.id,
         :line_number => index + 1,
         :content => line.text.to_s.squish
@@ -57,13 +60,12 @@ DOC_OVID_METAMORPHOSES.xpath("//div1").each do |book|
     :text_id => ovid_metamorphoses.id,
     :book_number => book['n'].to_i
   )
-  new_section = Section.create(
-    :book_id => new_book.id,
-    :identifier => '1',
-  )
   book.xpath("l").each_with_index do |line, index|
     line = Line.create(
-      :section_id => new_section.id,
+      :author_id => ovid.id,
+      :text_id => ovid_metamorphoses.id,
+      :book_id => new_book.id,
+      :section_id => nil,
       :line_number => index + 1,
       :content => line.text.to_s.squish
     )
@@ -78,13 +80,12 @@ DOC_OVID_FASTI.xpath("//div1").each do |book|
     :text_id => ovid_fasti.id,
     :book_number => book['n'].to_i
   )
-  new_section = Section.create(
-    :book_id => new_book.id,
-    :identifier => '1',
-  )
   book.xpath("l").each_with_index do |line, index|
     line = Line.create(
-      :section_id => new_section.id,
+      :author_id => ovid.id,
+      :text_id => ovid_fasti.id,
+      :book_id => new_book.id,
+      :section_id => nil,
       :line_number => index + 1,
       :content => line.text.to_s.squish
     )

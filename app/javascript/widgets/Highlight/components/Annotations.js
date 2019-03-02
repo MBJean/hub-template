@@ -21,8 +21,8 @@ export default class Annotations extends Component {
           this.props.page_data.annotations.active_type === "new" ?
             null:
             this.props.page_data.section.current_user === "guest" ?
-              <button className="mdc-button" disabled>Sign up to add annotations</button>:
-              <button className="mdc-button" onClick={this.props.onClickAdd}>Add Annotation</button>
+              <button className="button--primary" disabled>Sign up to add annotations</button>:
+              <button className="button--primary" onClick={this.props.onClickAdd}>Add Annotation</button>
         }
         {
           this.props.page_data.annotations.active_type === "add" ?

@@ -60,17 +60,6 @@ body {
 	padding: 0;
 }
 
-.app__body {
-	align-items: stretch;
-	display: flex;
-	margin-top: calc(4.5rem + 2px);
-	min-height: 100vh;
-}
-
-.app__right-panel {
-	flex-grow: 1;
-}
-
 .app__footer {
 	background-color: white;
 	border-top: 2px solid $brand-black;
