@@ -23,8 +23,8 @@ const Annotation = props => {
       {
         props.section_data.current_user === props.annotation.user_id ?
           <div className="mdc-card__action-icons">
-            <button className="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" onClick={ () => props.onClickEdit(props.annotation) } >edit</button>
-            <button className="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon" onClick={ () => props.onClickDelete(props.annotation.id) }>delete</button>
+            <button className="button--secondary" onClick={ () => props.onClickEdit(props.annotation) } >Edit</button>
+            <button className="button--primary" onClick={ () => props.onClickDelete(props.annotation.id) }>Delete</button>
           </div>:
           null
       }

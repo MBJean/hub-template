@@ -3,25 +3,22 @@ Rails.application.routes.draw do
   # devise stuff
   devise_for :users, :controllers => { registrations: 'registrations' }
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "dashboard#index"
 
   #user routes
   get "users/profile" => "user#show", as: :user_profile
-
-  # routing for author and texts
-  get "authors" => "authors#index", as: :author_path
-  get "authors/:short_name" => "authors#by_short_name"
-  get "authors/:short_name/:text" => "authors#by_text"
-  get "authors/:short_name/:text/:book_number" => "authors#by_book"
-  get "authors/:short_name/:text/:book_number/:section_identifier" => "authors#by_section"
-  get "authors/:short_name/:text/:book_number/:section/:line_number" => "authors#by_line"
 
   # API routes
   namespace :api do
     namespace :v1 do
     	get '/dictionary/:lemma/', to: 'dictionary#show'
       resources :annotation, except: [:index]
+      get "text_lookup" => "text_lookup#index", as: :author_path
+      get "text_lookup/:short_name" => "text_lookup#by_short_name"
+      get "text_lookup/:short_name/:text" => "text_lookup#by_text"
+      get "text_lookup/:short_name/:text/:book" => "text_lookup#by_book"
+      get "text_lookup/:short_name/:text/:book/:section" => "text_lookup#by_section"
+      get "text_lookup/:short_name/:text/:book/:section/:line" => "text_lookup#by_line"
       get 'section/:id/' => 'section#show'
     end
   end

@@ -38,38 +38,31 @@ class Highlight extends Component {
       "annotations": highlight[1]
     };
     return (
-      <div className="Highlight mdc-layout-grid">
+      <div className="Highlight">
 
-        <div className="mdc-layout-grid__inner">
-
-          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-0-mobile mdc-layout-grid__cell--span-0-tablet mdc-layout-grid__cell--span-1-desktop"></div>
-
-          <div className="mdc-layout-grid__cell mdc-layout-grid__cell--span-4-mobile mdc-layout-grid__cell--span-5-tablet mdc-layout-grid__cell--span-5-desktop">
-            <div className="Highlight__header">
-              <h1>{this.props.options.title}</h1>
-            </div>
-            <Text
-              onClickAnnotation={this.onClickAnnotation}
-              onMouseUpText={this.onMouseUpText}
-              options={this.props.options}
-              page_data={PAGE_DATA}
-            />
-          </div>
-
-          {
-            PAGE_DATA.annotations.is_active ?
-              <Annotations
-                page_data={PAGE_DATA}
-                onClickAdd={this.onClickAdd}
-                onClickDelete={this.onClickDelete}
-                onClickEdit={this.onClickEdit}
-                onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
-                onSubmitNewAnnotation={this.onSubmitNewAnnotation}
-              />:
-              null
-          }
-
+        <div className="Highlight__header">
+          <h1>{this.props.options.title}</h1>
         </div>
+        <Text
+          onClickAnnotation={this.onClickAnnotation}
+          onMouseUpText={this.onMouseUpText}
+          options={this.props.options}
+          page_data={PAGE_DATA}
+        />
+
+        {
+          PAGE_DATA.annotations.is_active ?
+            <Annotations
+              page_data={PAGE_DATA}
+              onClickAdd={this.onClickAdd}
+              onClickDelete={this.onClickDelete}
+              onClickEdit={this.onClickEdit}
+              onSubmitEditedAnnotation={this.onSubmitEditedAnnotation}
+              onSubmitNewAnnotation={this.onSubmitNewAnnotation}
+            />:
+            null
+        }
+
       </div>
     )
   }
